@@ -1,4 +1,29 @@
-(org-babel-load-file "~/.emacs.d/config.org")
+;; (org-babel-load-file "~/.emacs.d/config.org")
+(add-to-list 'load-path (expand-file-name "init_modules" user-emacs-directory))
+
+(require 'init-core)
+(require 'init-aesthetics)
+
+(require 'init-meow)
+(require 'init-copilot)
+(require 'init-corfu)
+(require 'init-org)
+(require 'init-keychord)
+(require 'init-magit)
+(require 'init-marginalia)
+(require 'init-dired)
+(require 'init-orderless)
+(require 'init-projectile)
+(require 'init-vertico)
+(require 'init-vterm)
+(require 'init-hydra)
+(require 'init-functions)
+
+(require 'init-eglot)
+(require 'init-python)
+(require 'init-ess)
+
+(require 'init-keybindings)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -8,11 +33,13 @@
  '(blacken-executable "/home/ian/anaconda3/bin/black")
  '(copilot-node-executable "/home/ian/.nvm/versions/node/v20.12.0/bin/node")
  '(custom-safe-themes
-   '("a37d20710ab581792b7c9f8a075fcbb775d4ffa6c8bce9137c84951b1b453016"
+   '("f079ef5189f9738cf5a2b4507bcaf83138ad22d9c9e32a537d61c9aae25502ef"
+     "a37d20710ab581792b7c9f8a075fcbb775d4ffa6c8bce9137c84951b1b453016"
      "f74e8d46790f3e07fbb4a2c5dafe2ade0d8f5abc9c203cd1c29c7d5110a85230"
      default "zenburn"))
  '(debug-on-error nil)
  '(dired-listing-switches "-lha --group-directories-first")
+ '(global-hl-line-mode nil)
  '(ispell-dictionary nil)
  '(key-chord-one-key-delay 0.0)
  '(lsp-completion-provider :none)
