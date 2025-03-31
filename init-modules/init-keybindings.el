@@ -4,6 +4,10 @@
 ;; (global-set-key (kbd "M-O") 'ace-window)
 ;; (global-set-key (kbd "M-o") 'other-window)
 
+
+(global-set-key (kbd "C-9") 'previous-buffer)
+(global-set-key (kbd "C-0") 'next-buffer)
+
 ;; Normally, suspend frame
 (global-set-key (kbd "C-z") 'switch-to-last-buffer)
 

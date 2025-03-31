@@ -77,6 +77,11 @@ If a buffer with the given name exists, switch to it; otherwise, create a new vt
 ;; Sync vterm -> Meow
 (add-hook 'vterm-copy-mode-hook #'vterm-sync-to-meow-mode)
 (add-hook 'vterm-copy-mode-hook #'my-vterm-copy-mode-keys)
+
+;; Set vterm keybindings
+(define-key vterm-mode-map (kbd "C-9") 'previous-buffer)
+(define-key vterm-mode-map (kbd "C-0") 'next-buffer)
+
 (defun my-vterm-setup-meow-keys ()
   "Set up Meow keybindings for vterm buffers."
   (when (derived-mode-p 'vterm-mode)
@@ -84,6 +89,7 @@ If a buffer with the given name exists, switch to it; otherwise, create a new vt
     (meow-insert-mode 1)
     ;; Ensure that ';' switches to Meow normal mode by exiting insert mode.
     (local-set-key (kbd ";") #'meow-insert-exit)))
+
 (defun my-vterm-copy-mode-keys ()
   "Set up keybindings specific to vterm copy mode.
 Binds uppercase \"I\" to exit vterm copy mode and switch to Meow Insert mode."
@@ -98,4 +104,5 @@ Binds uppercase \"I\" to exit vterm copy mode and switch to Meow Insert mode."
             (lambda (&rest _args)
               (when (derived-mode-p 'vterm-mode)
                 (meow-insert-mode 1))))
+
 (provide 'init-vterm)

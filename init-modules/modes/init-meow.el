@@ -7,7 +7,7 @@
 	;; insert doesn't work in vterm-mode
         (vterm-send-key ";")
       (insert ";")))
-  
+
   (defun set-meow-normal-mode-key ()
     (local-unset-key (kbd ";"))
     (global-set-key (kbd ";") 'meow-insert-exit))
@@ -114,11 +114,26 @@
      '("y" . meow-save)
      '("Y" . kill-ring-save)
      '("z" . meow-pop-selection)
-     '("h" . repeat)
+     ;; '("h" . repeat)
      '("'" . meow-reverse)
      '("/" . avy-goto-char)))
   
   (meow-setup)
   (meow-global-mode 1))
-  
+
+;; Repeat-fu to allow multicommand repeats
+(use-package repeat-fu
+  :commands (repeat-fu-mode repeat-fu-execute)
+
+  :config
+  (setq repeat-fu-preset 'meow)
+
+  :hook
+  ((meow-mode)
+   .
+   (lambda ()
+     (when (and (not (minibufferp)) (not (derived-mode-p 'special-mode)))
+       (repeat-fu-mode)
+       (define-key meow-normal-state-keymap (kbd "h") 'repeat-fu-execute)))))
+
 (provide 'init-meow)

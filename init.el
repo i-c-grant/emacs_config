@@ -63,7 +63,7 @@
 	 lsp-pyright magit marginalia meow minions multiple-cursors
 	 orderless org org-bullets org-mode org-modern org-roam
 	 org-roam-consult org-superstar org-superstar-mode orgalist
-	 pdf-tools projectile pyvenv ripgrep tree-sitter
+	 pdf-tools projectile pyvenv repeat-fu ripgrep tree-sitter
 	 tree-sitter-langs undo-tree use-package vertico vterm w3 w3m
 	 which-key wind-move windswap yaml-mode zenburn-theme))
  '(projectile-mode t nil (projectile))
@@ -94,3 +94,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'narrow-to-region 'disabled nil)
