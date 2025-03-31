@@ -210,36 +210,5 @@ If REGION is provided, unfill that region."
   (let ((fill-column (point-max))
         (emacs-lisp-docstring-fill-column t))
     (fill-paragraph nil region)))
-(defun start-named-vterm ()
-  "Start a vterm buffer with a user-provided name enclosed in asterisks.
-Prompts for a name and creates the vterm buffer with that formatted name."
-  (interactive)
-  (let ((buffer-name (concat "*" (read-string "Enter vterm buffer name: ") "*")))
-    (vterm buffer-name)))
-
-(defun find-vterm ()
-  "Find or create a vterm buffer with a user-specified name.
-Prompts with a vertico-style completion list of existing vterm buffers (displayed without asterisks).
-If a buffer with the given name exists, switch to it; otherwise, create a new vterm with that name."
-  (interactive)
-  (let* ((vterm-buffers (cl-remove-if-not
-                         (lambda (buf)
-                           (with-current-buffer buf
-                             (derived-mode-p 'vterm-mode)))
-                         (buffer-list)))
-         (candidate-names (mapcar (lambda (buf)
-                                    (let ((name (buffer-name buf)))
-                                      (if (and (> (length name) 1)
-                                               (string-prefix-p "*" name)
-                                               (string-suffix-p "*" name))
-                                          ;; Strip the asterisks for display.
-                                          (substring name 1 -1)
-                                        name)))
-                                  vterm-buffers))
-         (name (completing-read "Enter vterm buffer name: " candidate-names nil nil)))
-    (let ((full-name (concat "*" name "*")))
-      (if (get-buffer full-name)
-          (switch-to-buffer full-name)
-        (vterm full-name)))))
 
 (provide 'init-functions)

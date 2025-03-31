@@ -16,23 +16,15 @@
         (other-window 1)
         (vterm vterm-name)))))
 
-(define-key vterm-mode-map (kbd "`") 'vterm-copy-mode)
-(define-key vterm-copy-mode-map (kbd "`") 'vterm-copy-mode)
 
 (defun vterm-copy-mode-rename-buffer ()
-  "Update buffer name based on vterm-copy-mode state and handle meow modes."
+  "Update buffer name based on vterm-copy-mode state."
   (let ((current-name (buffer-name)))
     (if vterm-copy-mode
-        (progn
-          (unless (string-match-p "^<.*>$" current-name)
-            (rename-buffer (format "<%s>" current-name)))
-          (meow-normal-mode 1))
-      (progn
-        (when (string-match "^<\\(.*\\)>$" current-name)
-          (let ((name-without-brackets (match-string 1 current-name)))
-            (when name-without-brackets
-              (rename-buffer name-without-brackets))))
-        (meow-insert-mode 1)))))
+        (unless (string-match-p "^<.*>$" current-name)
+          (rename-buffer (format "<%s>" current-name)))
+      (when (string-match "^<\\(.*\\)>$" current-name)
+        (rename-buffer (match-string 1 current-name))))))
 
 (defun find-vterm ()
   "Find or create a vterm buffer with a user-specified name.
@@ -65,4 +57,45 @@ If a buffer with the given name exists, switch to it; otherwise, create a new vt
 ;; New addition to fix flickering
 (add-hook 'vterm-mode-hook (lambda () (hl-line-mode -1)))
 (setq-local global-hl-line-mode nil)
+(defun meow-sync-to-vterm-copy-mode ()
+  "Enable vterm-copy-mode when entering Meow normal mode."
+  (when (derived-mode-p 'vterm-mode)
+    (if meow-normal-mode
+        (unless vterm-copy-mode (vterm-copy-mode 1))
+      (when vterm-copy-mode (vterm-copy-mode 0)))))
+
+(defun vterm-sync-to-meow-mode ()
+  "Sync Meow mode with vterm-copy-mode state."
+  (if vterm-copy-mode
+      (unless meow-normal-mode (meow-normal-mode 1))
+    (when meow-normal-mode (meow-insert-mode 1))))
+
+;; Sync Meow -> vterm
+(add-hook 'meow-normal-mode-hook #'meow-sync-to-vterm-copy-mode)
+(add-hook 'meow-insert-mode-hook #'meow-sync-to-vterm-copy-mode)
+
+;; Sync vterm -> Meow
+(add-hook 'vterm-copy-mode-hook #'vterm-sync-to-meow-mode)
+(add-hook 'vterm-copy-mode-hook #'my-vterm-copy-mode-keys)
+(defun my-vterm-setup-meow-keys ()
+  "Set up Meow keybindings for vterm buffers."
+  (when (derived-mode-p 'vterm-mode)
+    ;; Force vterm buffers to start in Meow Insert mode.
+    (meow-insert-mode 1)
+    ;; Ensure that ';' switches to Meow normal mode by exiting insert mode.
+    (local-set-key (kbd ";") #'meow-insert-exit)))
+(defun my-vterm-copy-mode-keys ()
+  "Set up keybindings specific to vterm copy mode.
+Binds uppercase \"I\" to exit vterm copy mode and switch to Meow Insert mode."
+  (when vterm-copy-mode
+    (local-set-key (kbd "i")
+                   (lambda ()
+                     (interactive)
+                     (vterm-copy-mode 0)
+                     (meow-insert-mode 1)))))
+(add-hook 'vterm-mode-hook #'my-vterm-setup-meow-keys)
+(advice-add 'vterm :after
+            (lambda (&rest _args)
+              (when (derived-mode-p 'vterm-mode)
+                (meow-insert-mode 1))))
 (provide 'init-vterm)

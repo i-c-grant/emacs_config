@@ -1,8 +1,12 @@
 (use-package meow
   :init
-  (defun insert-semicolon () 
+  (defun insert-semicolon ()
+    ;; manual insert semicolon to allow ; for meow-normal-mode
     (interactive)
-    (insert ";"))
+    (if (derived-mode-p 'vterm-mode)
+	;; insert doesn't work in vterm-mode
+        (vterm-send-key ";")
+      (insert ";")))
   
   (defun set-meow-normal-mode-key ()
     (local-unset-key (kbd ";"))
