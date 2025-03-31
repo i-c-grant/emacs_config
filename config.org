@@ -401,6 +401,8 @@
 ** Magit
 #+begin_src elisp
 (use-package magit)
+
+(provide 'init-magit)
 #+end_src
 ** Marginalia
 #+begin_src elisp

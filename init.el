@@ -1,5 +1,6 @@
 ;; (org-babel-load-file "~/.emacs.d/config.org")
-(add-to-list 'load-path (expand-file-name "init_modules" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "init-modules" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "init-modules/modes" user-emacs-directory))
 
 (require 'init-core)
 (require 'init-aesthetics)
@@ -18,6 +19,7 @@
 (require 'init-vterm)
 (require 'init-hydra)
 (require 'init-functions)
+(require 'init-utils)
 
 (require 'init-eglot)
 (require 'init-python)
@@ -55,16 +57,17 @@
  '(org-todo-keywords '((sequence "TODO" "FORWARD" "DONE")))
  '(package-selected-packages
    '(ESS aggressive-indent babel blacken chatgpt-shell chess citeproc
-	 corfu docker dockerfile-mode eglot ein embark embark-consult
-	 ess ess-view-data flycheck hc-zenburn-theme hydra info-mode
-	 key-chord lsp-pyright magit marginalia meow minions
-	 multiple-cursors orderless org org-bullets org-mode
-	 org-modern org-superstar org-superstar-mode orgalist
+	 consult-org-roam corfu docker dockerfile-mode eglot ein
+	 embark embark-consult ess ess-view-data exec-path-from-shell
+	 flycheck hc-zenburn-theme hydra info-mode key-chord
+	 lsp-pyright magit marginalia meow minions multiple-cursors
+	 orderless org org-bullets org-mode org-modern org-roam
+	 org-roam-consult org-superstar org-superstar-mode orgalist
 	 pdf-tools projectile pyvenv ripgrep tree-sitter
 	 tree-sitter-langs undo-tree use-package vertico vterm w3 w3m
 	 which-key wind-move windswap yaml-mode zenburn-theme))
  '(projectile-mode t nil (projectile))
- '(projectile-switch-project-action 'projectile-find-dir)
+ '(projectile-switch-project-action 'projectile-find-file)
  '(safe-local-variable-values
    '((projectile-project-test-prefix
       . "/home/ian/miniconda3/bin/conda run -n floodnet-client")

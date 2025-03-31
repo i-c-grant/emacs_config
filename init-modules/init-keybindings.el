@@ -41,7 +41,10 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; (global-set-key (kbd "C-S-d") 'pyvenv-restart-python)
+(global-set-key (kbd "C-<return>") 'find-vterm)
+
 (message "Global keys bound.")
+
 ;; (global-set-key (kbd "C-x 4") 'mp-split-window-4)
 
 (provide 'init-keybindings)
