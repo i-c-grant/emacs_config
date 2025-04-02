@@ -19,7 +19,7 @@
 
 (defvar consult--source-process-buffer
   (list :name "Process Buffers"
-        :narrow ?p
+        :narrow ?x
         :category 'buffer
         :face 'consult-buffer
         :history 'buffer-name-history
