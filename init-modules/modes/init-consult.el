@@ -19,7 +19,7 @@
 
 (defvar consult--source-process-buffer
   (list :name "Process Buffers"
-        :narrow ?v
+        :narrow ?p
         :category 'buffer
         :face 'consult-buffer
         :history 'buffer-name-history
@@ -32,6 +32,37 @@
                           (buffer-list))))
         :action (lambda (buf) (switch-to-buffer buf)))
   "Consult source for buffers with an associated process.")
+
+(defvar consult--source-vterm-buffer
+  (list :name "Vterm Buffers"
+        :narrow ?v
+        :category 'buffer
+        :face 'consult-buffer
+        :history 'buffer-name-history
+        :items (lambda ()
+                 (mapcar #'buffer-name
+                         (cl-remove-if-not
+                          (lambda (buf)
+                            (with-current-buffer buf
+                              (derived-mode-p 'vterm-mode)))
+                          (buffer-list))))
+        :action (lambda (buf) (switch-to-buffer buf)))
+  "Consult source for buffers in `vterm-mode'.")
+
+(defvar consult--source-aider-buffer
+  (list :name "Aider Buffers"
+        :narrow ?a
+        :category 'buffer
+        :face 'consult-buffer
+        :history 'buffer-name-history
+        :items (lambda ()
+                 (mapcar #'buffer-name
+                         (cl-remove-if-not
+                          (lambda (buf)
+                            (string-prefix-p "*aider" (buffer-name buf)))
+                          (buffer-list))))
+        :action (lambda (buf) (switch-to-buffer buf)))
+  "Consult source for aider buffers.")
 
 (defvar consult--source-dired-buffer
   (list :name "Dired Buffers"
@@ -74,7 +105,9 @@
         (append consult-buffer-sources
                 (list consult--source-file-buffer
                       consult--source-process-buffer
+                      consult--source-vterm-buffer
                       consult--source-dired-buffer
-                      consult--source-special-buffer))))
+                      consult--source-special-buffer
+                      consult--source-aider-buffer))))
 
 (provide 'init-consult)
