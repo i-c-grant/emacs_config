@@ -75,3 +75,5 @@
                       consult--source-process-buffer
                       consult--source-dired-buffer
                       consult--source-special-buffer))))
+
+(provide 'init-consult)

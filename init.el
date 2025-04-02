@@ -16,10 +16,15 @@
 (require 'init-orderless)
 (require 'init-projectile)
 (require 'init-vertico)
+(require 'init-embark)
+
 (require 'init-vterm)
-(require 'init-hydra)
+;; (require 'init-hydra)
 (require 'init-functions)
 (require 'init-utils)
+;; (require 'init-recentf)
+(require 'init-consult)
+(require 'init-ace-window)
 
 (require 'init-eglot)
 (require 'init-python)
