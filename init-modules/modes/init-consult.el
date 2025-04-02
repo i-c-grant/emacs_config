@@ -1,5 +1,4 @@
 ;; init-consult.el: Boilerplate initialization of consult using use-package
-
 (use-package consult
   :ensure t)
 
@@ -52,7 +51,7 @@
 
 (defvar consult--source-special-buffer
   (list :name "Special Buffers"
-        :narrow ?s
+        :narrow ?v
         :category 'buffer
         :face 'consult-buffer
         :history 'buffer-name-history
