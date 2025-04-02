@@ -70,6 +70,8 @@
   (setq consult-buffer-sources
         (remove consult--source-recent-file consult-buffer-sources))
   (setq consult-buffer-sources
+        (remove consult--source-modified-buffer consult-buffer-sources))
+  (setq consult-buffer-sources
         (append consult-buffer-sources
                 (list consult--source-file-buffer
                       consult--source-process-buffer
