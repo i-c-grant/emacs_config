@@ -12,6 +12,4 @@
   ("i" ibuffer "ibuffer")
   ("q" nil "quit"))
 
-(global-set-key (kbd "C-x b") 'hydra-buffer-switch/body)
-
 (provide 'init-hydra)
