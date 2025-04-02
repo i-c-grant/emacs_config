@@ -67,11 +67,8 @@
   "Consult source for special buffers whose names start and end with '*'.")
 
 (with-eval-after-load 'consult
-  ;; there must be a more idiomatic/smarter way to consolidate these two lines AI!
-  (setq consult-buffer-sources
-        (remove consult--source-recent-file consult-buffer-sources))
-  (setq consult-buffer-sources
-        (remove consult--source-modified-buffer consult-buffer-sources))
+  (dolist (src '(consult--source-recent-file consult--source-modified-buffer))
+    (setq consult-buffer-sources (remove src consult-buffer-sources)))
 
   (setq consult-buffer-sources
         (append consult-buffer-sources
