@@ -47,9 +47,17 @@
     (meow-normal-define-key
      '(">" . scroll-up-command)
      '("<" . scroll-down-command)
-     '("=" . pop-to-mark-command)
-     '("+" . pop-global-mark)
+
+     ;; Consult bindings
+     '("<backspace>" . pop-mark)
+     '("=" . consult-mark)
+     '("+" . consult-global-mark)
+     '("?" . consult-line)
+     '("V" . consult-imenu)
+     '("C" . consult-outline)
+
      '("S" . save-buffer)
+     '("Z" . undo)
   
      '("0" . meow-expand-0)
      '("9" . meow-expand-9)
@@ -98,7 +106,7 @@
      '("p" . meow-yank)
      '("P" . yank-and-replace)
      '("q" . kill-current-buffer)
-     '("Q" . meow-goto-line)
+     '("Q" . consult-ripgrep)
      '("r" . meow-replace)
      '("R" . meow-swap-grab)
      '("s" . meow-kill)
@@ -106,11 +114,10 @@
      '("u" . meow-undo)
      '("U" . meow-undo-in-selection)
      '("v" . meow-visit)
-     '("V" . imenu)
      '("w" . meow-mark-word)
      '("W" . meow-mark-symbol)
      '("x" . meow-line)
-     '("X" . meow-goto-line)
+     '("X" . consult-goto-line)
      '("y" . meow-save)
      '("Y" . kill-ring-save)
      '("z" . meow-pop-selection)

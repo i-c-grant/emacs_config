@@ -47,6 +47,27 @@
 ;; (global-set-key (kbd "C-S-d") 'pyvenv-restart-python)
 (global-set-key (kbd "C-<return>") 'find-vterm)
 
+;; Consult bindings
+(global-set-key (kbd "C-x b") 'consult-buffer)
+(global-set-key (kbd "C-x 4 b") 'consult-buffer-other-window)
+(global-set-key (kbd "M-g g") 'consult-goto-line)
+(global-set-key (kbd "M-g b") 'consult-bookmark)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (message "Global keys bound.")
 
 ;; (global-set-key (kbd "C-x 4") 'mp-split-window-4)
