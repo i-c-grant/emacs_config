@@ -13,7 +13,8 @@
         :face 'consult-buffer
         :history 'buffer-name-history
         :items (lambda ()
-                 (cl-remove-if-not #'buffer-file-name (buffer-list)))
+                 (mapcar #'buffer-name
+                         (cl-remove-if-not #'buffer-file-name (buffer-list))))
         :action (lambda (buf) (switch-to-buffer buf)))
   "Consult source for buffers where `buffer-file-name' is non-nil.")
 
@@ -24,11 +25,12 @@
         :face 'consult-buffer
         :history 'buffer-name-history
         :items (lambda ()
-                 (cl-remove-if-not
-                  (lambda (buf)
-                    (and (get-buffer-process buf)
-                         (not (string-match-p "copilot" (downcase (buffer-name buf))))))
-                  (buffer-list)))
+                 (mapcar #'buffer-name
+                         (cl-remove-if-not
+                          (lambda (buf)
+                            (and (get-buffer-process buf)
+                                 (not (string-match-p "copilot" (downcase (buffer-name buf))))))
+                          (buffer-list))))
         :action (lambda (buf) (switch-to-buffer buf)))
   "Consult source for buffers with an associated process.")
 
@@ -39,11 +41,12 @@
         :face 'consult-buffer
         :history 'buffer-name-history
         :items (lambda ()
-                 (cl-remove-if-not
-                  (lambda (buf)
-                    (with-current-buffer buf
-                      (eq major-mode 'dired-mode)))
-                  (buffer-list)))
+                 (mapcar #'buffer-name
+                         (cl-remove-if-not
+                          (lambda (buf)
+                            (with-current-buffer buf
+                              (eq major-mode 'dired-mode)))
+                          (buffer-list))))
         :action (lambda (buf) (switch-to-buffer buf)))
   "Consult source for buffers in `dired-mode'.")
 
@@ -54,12 +57,13 @@
         :face 'consult-buffer
         :history 'buffer-name-history
         :items (lambda ()
-                 (cl-remove-if-not
-                  (lambda (buf)
-                    (let ((name (buffer-name buf)))
-                      (and (string-prefix-p "*" name)
-                           (string-suffix-p "*" name))))
-                  (buffer-list)))
+                 (mapcar #'buffer-name
+                         (cl-remove-if-not
+                          (lambda (buf)
+                            (let ((name (buffer-name buf)))
+                              (and (string-prefix-p "*" name)
+                                   (string-suffix-p "*" name))))
+                          (buffer-list))))
         :action (lambda (buf) (switch-to-buffer buf)))
   "Consult source for special buffers whose names start and end with '*'.")
 
