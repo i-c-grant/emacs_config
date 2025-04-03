@@ -72,7 +72,7 @@
 	 tree-sitter-langs undo-tree use-package vertico vterm w3 w3m
 	 which-key wind-move windswap yaml-mode zenburn-theme))
  '(projectile-mode t nil (projectile))
- '(projectile-switch-project-action 'projectile-find-file)
+ '(projectile-switch-project-action 'projectile-dired)
  '(safe-local-variable-values
    '((projectile-project-test-prefix
       . "/home/ian/miniconda3/bin/conda run -n floodnet-client")
