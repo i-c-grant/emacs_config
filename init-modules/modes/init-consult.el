@@ -59,7 +59,8 @@
                  (mapcar #'buffer-name
                          (cl-remove-if-not
                           (lambda (buf)
-                            (string-prefix-p "*aider" (buffer-name buf)))
+                            (or (string-prefix-p "*aider" (buffer-name buf))
+                                (string-prefix-p "<*aider" (buffer-name buf))))
                           (buffer-list))))
         :action (lambda (buf) (switch-to-buffer buf)))
   "Consult source for aider buffers.")
