@@ -45,7 +45,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; (global-set-key (kbd "C-S-d") 'pyvenv-restart-python)
-(global-set-key (kbd "C-<return>") 'find-vterm)
+(global-set-key (kbd "C-x C-d") 'find-vterm)
 
 ;; Consult bindings
 (global-set-key (kbd "C-x b") 'consult-buffer)
