@@ -1,36 +1,3 @@
-;; (org-babel-load-file "~/.emacs.d/config.org")
-(add-to-list 'load-path (expand-file-name "init-modules" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "init-modules/modes" user-emacs-directory))
-
-(require 'init-core)
-(require 'init-aesthetics)
-
-(require 'init-meow)
-(require 'init-copilot)
-(require 'init-corfu)
-(require 'init-org)
-(require 'init-keychord)
-(require 'init-magit)
-(require 'init-marginalia)
-(require 'init-dired)
-(require 'init-orderless)
-(require 'init-projectile)
-(require 'init-vertico)
-(require 'init-embark)
-
-(require 'init-vterm)
-;; (require 'init-hydra)
-(require 'init-functions)
-(require 'init-utils)
-;; (require 'init-recentf)
-(require 'init-consult)
-(require 'init-ace-window)
-
-(require 'init-eglot)
-(require 'init-python)
-(require 'init-ess)
-
-(require 'init-keybindings)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -84,9 +51,5 @@
  '(vterm-min-window-width 70)
  '(warning-minimum-level :error)
  '(which-key-mode 1))
-;; Set up customization file and load customizations
-(setq custom-file
-      (expand-file-name "custom.el" user-emacs-directory))
 
-(when (file-exists-p custom-file) (load custom-file))
-
+(put 'narrow-to-region 'disabled nil)
