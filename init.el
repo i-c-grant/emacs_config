@@ -20,10 +20,8 @@
 (require 'init-embark)
 
 (require 'init-vterm)
-;; (require 'init-hydra)
 (require 'init-functions)
 (require 'init-utils)
-;; (require 'init-recentf)
 (require 'init-consult)
 (require 'init-ace-window)
 
