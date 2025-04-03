@@ -3,6 +3,8 @@
 
 ;; Load the core configuration
 (require 'init-core)
+(require 'no-littering)
+
 (require 'init-aesthetics)
 
 ;; Load the mode modules

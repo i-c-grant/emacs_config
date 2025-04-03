@@ -33,11 +33,12 @@
 	 embark embark-consult ess ess-view-data exec-path-from-shell
 	 flycheck hc-zenburn-theme hydra info-mode key-chord
 	 lsp-pyright magit marginalia meow minions multiple-cursors
-	 orderless org org-bullets org-mode org-modern org-roam
-	 org-roam-consult org-superstar org-superstar-mode orgalist
-	 pdf-tools projectile pyvenv repeat-fu ripgrep tree-sitter
-	 tree-sitter-langs undo-tree use-package vertico vterm w3 w3m
-	 which-key wind-move windswap yaml-mode zenburn-theme))
+	 no-littering orderless org org-bullets org-mode org-modern
+	 org-roam org-roam-consult org-superstar org-superstar-mode
+	 orgalist pdf-tools projectile pyvenv repeat-fu ripgrep
+	 tree-sitter tree-sitter-langs undo-tree use-package vertico
+	 vterm w3 w3m which-key wind-move windswap yaml-mode
+	 zenburn-theme))
  '(projectile-mode t nil (projectile))
  '(projectile-switch-project-action 'projectile-dired)
  '(safe-local-variable-values
@@ -53,3 +54,9 @@
  '(which-key-mode 1))
 
 (put 'narrow-to-region 'disabled nil)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
