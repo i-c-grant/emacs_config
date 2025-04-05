@@ -5,7 +5,6 @@
 ;; Consult does some things better than projectile
 (define-key projectile-command-map (kbd "s r") 'consult-ripgrep)
 
-
 (defun my-projectile-switch-to-aider-and-dired (&optional project-root)
   "Open aider and projectile-dired in separate vertical split windows for PROJECT-ROOT.
 This function deletes other windows, splits the frame vertically, and in one
