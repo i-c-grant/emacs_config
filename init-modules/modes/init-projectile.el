@@ -5,6 +5,15 @@
 ;; Consult does some things better than projectile
 (define-key projectile-command-map (kbd "s r") 'consult-ripgrep)
 
+(defun my-aider-buffer-for-project (&optional project-root)
+  "Return the name of the existing aider buffer for PROJECT-ROOT, or nil if none exists.
+Handles both '*aider: name*' and '<*aider: name*>' patterns."
+  (let* ((project-root (or project-root (projectile-project-root)))
+         (project-name (file-name-nondirectory (directory-file-name project-root)))
+         (patterns (list (format "*aider: %s*" project-name)
+                         (format "<*aider: %s*>" project-name))))
+    (seq-find #'get-buffer patterns)))
+
 (defun my-projectile-switch-to-aider-and-dired (&optional project-root)
   "Open aider and projectile-dired in separate vertical split windows for PROJECT-ROOT.
 This function deletes other windows, splits the frame vertically, and in one
@@ -20,8 +29,15 @@ window opens projectile-dired while in the other it runs launch-aider."
         (projectile-dired))
       (with-selected-window aider-window
         (setq default-directory project-root)
+	;; Set up a new window for Magit
         (let ((magit-window (split-window-below)))
-          (launch-aider)
+	  ;; If the Aider buffer already exists, switch to it
+	  (let ((aider-buffer (my-aider-buffer-for-project project-root)))
+	    (if aider-buffer
+		(switch-to-buffer aider-buffer)
+	      ;; Otherwise, launch Aider
+	      (launch-aider)))
+	  ;; Set up the Magit window
           (with-selected-window magit-window
             (setq default-directory project-root)
             (magit-status project-root)))))))
