@@ -211,10 +211,11 @@ If REGION is provided, unfill that region."
         (emacs-lisp-docstring-fill-column t))
     (fill-paragraph nil region)))
 
-(defun my-projectile-switch-to-aider-and-dired (project-root)
+(defun my-projectile-switch-to-aider-and-dired (&optional project-root)
   "Open aider and projectile-dired in separate vertical split windows for PROJECT-ROOT.
 This function deletes other windows, splits the frame vertically, and in one
 window opens projectile-dired while in the other it runs launch-aider."
+  (setq project-root (or project-root (projectile-project-root)))
   (let ((default-directory project-root))
     (delete-other-windows)
     (split-window-right)
