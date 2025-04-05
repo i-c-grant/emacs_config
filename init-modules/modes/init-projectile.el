@@ -5,4 +5,6 @@
 ;; Consult does some things better than projectile
 (define-key projectile-command-map (kbd "s r") 'consult-ripgrep)
 
+(setq projectile-switch-project-action #'my-projectile-switch-to-aider-and-dired)
+
 (provide 'init-projectile)
