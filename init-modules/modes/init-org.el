@@ -49,7 +49,7 @@ Only active if the file is an org file."
         (goto-char (point-min))
         (bookmark-set "todo")
         (message "Set todo bookmark for %s" buffer-file-name))
-    (message "This buffer is either not associated with a file or not an org file.")))
+    (message "The todo buffer must be an org file.")))
 
 (defun my-jump-to-todo ()
   "Jump to your active todo list bookmark 'todo'."
