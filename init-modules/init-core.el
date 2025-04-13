@@ -16,4 +16,7 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; Tell emacs where to find the treesitter grammars
+(setq treesit-extra-load-path '("~/.emacs.d/etc/tree-sitter"))
+
 (provide 'init-core)
