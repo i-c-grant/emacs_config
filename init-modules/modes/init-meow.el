@@ -56,10 +56,6 @@
      '("C" . consult-outline)
      '("N" . consult-focus-lines)	; N as in "narrow"
 
-     ;; Bookmark bindings
-     '("*" . my-jump-to-todo)
-     '("C-u *" . my-set-todo-bookmark)
-
      '("S" . save-buffer)
      '("Z" . undo)
   

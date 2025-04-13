@@ -58,3 +58,6 @@
     (error (message "No todo bookmark set."))))
 
 (provide 'init-org)
+
+(global-set-key (kbd "C-*") 'my-set-todo-bookmark)
+(global-set-key (kbd "C-8") 'my-jump-to-todo)

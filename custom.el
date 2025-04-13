@@ -27,7 +27,7 @@
  '(org-babel-load-languages '((python . t) (R . t)))
  '(org-babel-python-command "python3")
  '(org-src-preserve-indentation t)
- '(org-todo-keywords '((sequence "TODO" "FORWARD" "DONE")))
+ '(org-todo-keywords '((sequence "TODO" "DONE")))
  '(package-selected-packages
    '(ESS aggressive-indent babel blacken catppuccin-theme chatgpt-shell
 	 chess citeproc consult-org-roam corfu docker dockerfile-mode
