@@ -41,14 +41,15 @@
 (use-package consult-org-roam)
 
 (defun my-set-todo-bookmark ()
-  "Set the current file as your active todo list using a bookmark named 'todo'."
+  "Set the current file as your active todo list using a bookmark named 'todo'.
+Only active if the file is an org file."
   (interactive)
-  (if buffer-file-name
+  (if (and buffer-file-name (string-suffix-p ".org" buffer-file-name))
       (save-excursion
         (goto-char (point-min))
         (bookmark-set "todo")
         (message "Set todo bookmark for %s" buffer-file-name))
-    (message "This buffer is not associated with a file.")))
+    (message "This buffer is either not associated with a file or not an org file.")))
 
 (defun my-jump-to-todo ()
   "Jump to your active todo list bookmark 'todo'."
