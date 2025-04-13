@@ -15,7 +15,6 @@
   (global-set-key (kbd "C-M-;") 'insert-semicolon)
   
   :config
-  
   ;; Remove number line hints
   (setf meow-expand-hint-remove-delay 0)
   (setq meow-keypad-leader-dispatch (kbd "C-c p"))
@@ -55,6 +54,7 @@
      '("?" . consult-line)
      '("V" . consult-imenu)
      '("C" . consult-outline)
+     '("N" . consult-focus-lines)	; N as in "narrow"
 
      '("S" . save-buffer)
      '("Z" . undo)
@@ -83,7 +83,7 @@
      '("D" . meow-backward-delete)
      '("e" . meow-next-word)
      '("E" . meow-next-symbol)
-     '("f" . meow-find)
+     '("f" . consult-buffer)
      '("g" . meow-cancel-selection)
      '("G" . meow-grab)
      '("i" . meow-insert)
@@ -117,7 +117,7 @@
      '("w" . meow-mark-word)
      '("W" . meow-mark-symbol)
      '("x" . meow-line)
-     '("X" . consult-goto-line)
+     '("X" . consult-line)
      '("y" . meow-save)
      '("Y" . kill-ring-save)
      '("z" . meow-pop-selection)
