@@ -40,4 +40,24 @@
 
 (use-package consult-org-roam)
 
+(defun my-set-todo-bookmark ()
+  "Set the current file as your active todo list using a bookmark named 'todo'."
+  (interactive)
+  (if buffer-file-name
+      (save-excursion
+        (goto-char (point-min))
+        (bookmark-set "todo")
+        (message "Set todo bookmark for %s" buffer-file-name))
+    (message "This buffer is not associated with a file.")))
+
+(defun my-jump-to-todo ()
+  "Jump to your active todo list bookmark 'todo'."
+  (interactive)
+  (condition-case nil
+      (bookmark-jump "todo")
+    (error (message "No todo bookmark set."))))
+
+(global-set-key (kbd "C-c t s") 'my-set-todo-bookmark)
+(global-set-key (kbd "C-c t j") 'my-jump-to-todo)
+
 (provide 'init-org)
