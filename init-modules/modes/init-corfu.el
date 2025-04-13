@@ -1,7 +1,7 @@
 (use-package corfu
   :custom 
   (corfu-auto t)
-  (corfu-auto-delay .1)
+  (corfu-auto-delay .5)
   :config
   (global-corfu-mode)
   (setq tab-always-indent t)

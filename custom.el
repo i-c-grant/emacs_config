@@ -7,7 +7,8 @@
  '(blacken-executable "/home/ian/anaconda3/bin/black")
  '(copilot-node-executable "/home/ian/.nvm/versions/node/v20.12.0/bin/node")
  '(custom-safe-themes
-   '("f079ef5189f9738cf5a2b4507bcaf83138ad22d9c9e32a537d61c9aae25502ef"
+   '("c46651ab216eb31e699be1bd5e6df8229b08005b534194c1ea92519b09661d71"
+     "f079ef5189f9738cf5a2b4507bcaf83138ad22d9c9e32a537d61c9aae25502ef"
      "a37d20710ab581792b7c9f8a075fcbb775d4ffa6c8bce9137c84951b1b453016"
      "f74e8d46790f3e07fbb4a2c5dafe2ade0d8f5abc9c203cd1c29c7d5110a85230"
      default "zenburn"))
@@ -28,19 +29,19 @@
  '(org-src-preserve-indentation t)
  '(org-todo-keywords '((sequence "TODO" "FORWARD" "DONE")))
  '(package-selected-packages
-   '(ESS aggressive-indent babel blacken chatgpt-shell chess citeproc
-	 consult-org-roam corfu docker dockerfile-mode eglot ein
-	 embark embark-consult ess ess-view-data exec-path-from-shell
-	 flycheck hc-zenburn-theme hydra info-mode key-chord
-	 lsp-pyright magit marginalia meow minions multiple-cursors
-	 no-littering orderless org org-bullets org-mode org-modern
-	 org-roam org-roam-consult org-superstar org-superstar-mode
-	 orgalist pdf-tools projectile pyvenv repeat-fu ripgrep
+   '(ESS aggressive-indent babel blacken catppuccin-theme chatgpt-shell
+	 chess citeproc consult-org-roam corfu docker dockerfile-mode
+	 eglot ein embark embark-consult ess ess-view-data
+	 exec-path-from-shell flycheck hc-zenburn-theme hydra
+	 info-mode key-chord lsp-pyright magit marginalia
+	 markdown-mode meow minions multiple-cursors no-littering
+	 orderless org org-bullets org-mode org-modern org-roam
+	 org-roam-consult org-superstar org-superstar-mode orgalist
+	 pdf-tools popper projectile pyvenv repeat-fu ripgrep
 	 tree-sitter tree-sitter-langs undo-tree use-package vertico
 	 vterm w3 w3m which-key wind-move windswap yaml-mode
 	 zenburn-theme))
  '(projectile-mode t nil (projectile))
- '(projectile-switch-project-action 'projectile-dired)
  '(safe-local-variable-values
    '((projectile-project-test-prefix
       . "/home/ian/miniconda3/bin/conda run -n floodnet-client")
