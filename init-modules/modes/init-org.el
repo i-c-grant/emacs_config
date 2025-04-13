@@ -10,13 +10,18 @@
           ("("     . org-shiftleft)
           (")"     . org-shiftright)
           ("C-c a" . org-agenda)
-          ("C-c f" . insert-citation-needed)))
+          ("C-c f" . insert-citation-needed))
+
+  :hook ((org-mode . visual-line-mode)
+	 (org-mode . corfu-mode)))
           
 (setq org-directory "/usr/org")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (setq org-startup-folded t)
 
-(use-package org-modern)
+(use-package org-modern
+  :hook (org-mode . org-modern-mode)
+)
 
 (modify-all-frames-parameters
  '((right-divider-width . 40)
