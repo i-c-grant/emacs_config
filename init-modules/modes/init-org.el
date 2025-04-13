@@ -15,7 +15,7 @@
   :hook ((org-mode . visual-line-mode)
 	 (org-mode . corfu-mode)))
           
-(setq org-directory "/usr/org")
+(setq org-directory "~/org")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (setq org-startup-folded t)
 
