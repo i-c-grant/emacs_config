@@ -57,7 +57,4 @@
       (bookmark-jump "todo")
     (error (message "No todo bookmark set."))))
 
-(global-set-key (kbd "C-c t s") 'my-set-todo-bookmark)
-(global-set-key (kbd "C-c t j") 'my-jump-to-todo)
-
 (provide 'init-org)
