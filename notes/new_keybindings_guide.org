@@ -34,45 +34,6 @@ Below are some questions regarding the refactor:
 Just don't worry about them, they'll be taken care of by consult. However, the one exception is that projectile-switch-project needs to be replaced by the project.el equivalent and bound to "ESC" in meow-normal-mode.
 #+end_answer
 
-** round 3
-#+begin_src aider-question
-1. Since we're migrating from projectile to project.el, should we remove the entire projectile configuration from init-projectile.el, or maintain it for any backward compatibility?
-#+end_src
-
-#+begin_src aider-answer
-#+end_src
-
-#+begin_src aider-question
-2. In the current `my-projectile-switch-to-aider-and-dired` function, `projectile-dired` is used. Would you like to replace this with a custom dired command leveraging project.el, or continue using projectile-dired for now?
-#+end_src
-
-#+begin_src aider-answer
-#+end_src
-
-#+begin_aider-question
-2. Are there any keybinding conflicts to be aware of between consult/project.el/meow?
-#+end_aider-question
-
-#+begin_answer
-Not conflicts exactly. One thing to be aware of is, as stated above, we want two access points into the consult keymap: M-c normally and just c within meow-normal-mode.
-#+end_answer
-
-#+begin_aider-question
-3. Should we create migration helpers for existing projectile workflows?
-#+end_aider-question
-
-#+begin_answer
-No, this is not necessary. There are no complicated projectile workflows to replace. I suppose the one exception is that we will need to replace my custom project-switching function, which you can find in init-projectile.el.
-#+end_answer
-
-#+begin_aider-question
-4. What testing approach would you like for the transition?
-#+end_aider-question
-
-#+begin_answer
-There's no testing necessary, this isn't complicated enough to warrant formal testing.
-#+end_answer
-
 ** round 2
 #+begin_src aider-question
 1. The existing my-projectile-switch-to-aider-and-dired function in init-projectile.el needs to be migrated to project.el. Should we:
@@ -108,3 +69,46 @@ We're going to use consult's keymaps instead, so you don't need to worry about p
 
 However, I noticed in your thinking that you pointed out that p is currently meow-yank, a potential conflict with the project.el switch project. That's a good point, so let's make the switch project key ESC instead of p, leaving p for meow-yank. I've updated the answer to the relevant question above to reflect this change.
 #+end_answer
+
+#+begin_aider-question
+2. Are there any keybinding conflicts to be aware of between consult/project.el/meow?
+#+end_aider-question
+
+#+begin_answer
+Not conflicts exactly. One thing to be aware of is, as stated above, we want two access points into the consult keymap: M-c normally and just c within meow-normal-mode.
+#+end_answer
+
+#+begin_aider-question
+3. Should we create migration helpers for existing projectile workflows?
+#+end_aider-question
+
+#+begin_answer
+No, this is not necessary. There are no complicated projectile workflows to replace. I suppose the one exception is that we will need to replace my custom project-switching function, which you can find in init-projectile.el.
+#+end_answer
+
+#+begin_aider-question
+4. What testing approach would you like for the transition?
+#+end_aider-question
+
+#+begin_answer
+There's no testing necessary, this isn't complicated enough to warrant formal testing.
+#+end_answer
+
+** round 3
+#+begin_src aider-question
+1. Since we're migrating from projectile to project.el, should we remove the entire projectile configuration from init-projectile.el, or maintain it for any backward compatibility?
+#+end_src
+
+#+begin_src aider-answer
+Leave it for now, but just comment out the "require" in init-core so it isn't called.
+#+end_src
+
+#+begin_src aider-question
+2. In the current `my-projectile-switch-to-aider-and-dired` function, `projectile-dired` is used. Would you like to replace this with a custom dired command leveraging project.el, or continue using projectile-dired for now?
+#+end_src
+
+#+begin_src aider-answer
+Use the project.el version.
+#+end_src
+
+* Implementation steps
