@@ -52,13 +52,16 @@
 (global-set-key (kbd "C-x 4 b") 'consult-buffer-other-window)
 (global-set-key (kbd "M-g g") 'consult-goto-line)
 (global-set-key (kbd "M-g b") 'consult-bookmark)
-(global-set-key (kbd "M-c b") 'consult-buffer)
-(global-set-key (kbd "M-c f") 'consult-find)
-(global-set-key (kbd "M-c s") 'consult-ripgrep)
-(global-set-key (kbd "M-c x") 'consult-line)
-(global-set-key (kbd "M-c n") 'consult-focus-lines)
-(global-set-key (kbd "M-c c") 'consult-outline)
-(global-set-key (kbd "M-c i") 'consult-imenu)
+
+(defvar consult-keymap (make-sparse-keymap) "Keymap for Consult commands.")
+(define-key consult-keymap (kbd "b") 'consult-buffer)
+(define-key consult-keymap (kbd "f") 'consult-find)
+(define-key consult-keymap (kbd "s") 'consult-ripgrep)
+(define-key consult-keymap (kbd "x") 'consult-line)
+(define-key consult-keymap (kbd "n") 'consult-focus-lines)
+(define-key consult-keymap (kbd "c") 'consult-outline)
+(define-key consult-keymap (kbd "i") 'consult-imenu)
+(global-set-key (kbd "M-c") consult-keymap)
 
 
 
