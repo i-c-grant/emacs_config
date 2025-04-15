@@ -17,7 +17,7 @@
 (require 'init-marginalia)
 (require 'init-dired)
 (require 'init-orderless)
-(require 'init-projectile)
+;; (require 'init-projectile)
 (require 'init-vertico)
 (require 'init-embark)
 

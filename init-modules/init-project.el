@@ -43,9 +43,4 @@ Uses project.el instead of projectile."
             (setq default-directory project-root)
             (magit-status project-root)))))))
 
-(defvar project-switch-action #'my-project-switch-to-aider-and-dired
-  "Function to run after switching projects.")
-
-(add-hook 'project-switch-switch project-switch-action)
-
 (provide 'init-project)

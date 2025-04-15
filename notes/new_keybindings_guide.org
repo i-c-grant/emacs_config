@@ -117,6 +117,7 @@ Use the project.el version.
 - Add basic project.el config
 
 ** 2. Migrate my-projectile-switch-to-aider-and-dired to project.el
+- Create init-project.el
 - Update function name and projectile references
 - Use project.el APIs instead of projectile
 
