@@ -17,7 +17,7 @@
   :config
   ;; Remove number line hints
   (setf meow-expand-hint-remove-delay 0)
-  (setq meow-keypad-leader-dispatch (kbd "C-c p"))
+  (setq meow-keypad-leader-dispatch (kbd "M-c"))
   
   (defun meow-setup ()
     (set-meow-normal-mode-key)
