@@ -19,6 +19,7 @@ Handles both '*aider: name*' and '<*aider: name*>' patterns."
 This function deletes other windows, splits the frame vertically, and in one
 window opens dired for the project root while in the other it runs launch-aider.
 Uses project.el instead of projectile."
+  (interactive)
   (setq project-root (or project-root
                           (when (project-current)
                             (project-root (project-current)))))
