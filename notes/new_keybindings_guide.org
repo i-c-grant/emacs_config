@@ -25,13 +25,37 @@ I'm not really using the more complicate projectile.el stuff; project.el should 
 * aider clarifications
 Below are some questions regarding the refactor:
 
+** round 1
 #+begin_src aider-question
 1. How should we handle projectile-specific functions that don't have direct project.el equivalents?
-2. Are there any keybinding conflicts to be aware of between consult/project.el/meow?
-3. Should we create migration helpers for existing projectile workflows?
-4. What testing approach would you like for the transition?
 #+end_src
 
-#+begin_src answer
-#+end_src
-  
+#+begin_answer
+Just don't worry about them, they'll be taken care of by consult. However, the one exception is that projectile-switch-project needs to be replaced by the project.el equivalent and bound to "p" in meow-normal-mode.
+#+end_answer
+
+#+begin_aider-question
+2. Are there any keybinding conflicts to be aware of between consult/project.el/meow?
+#+end_aider-question
+
+#+begin_answer
+Not conflicts exactly. One thing to be aware of is, as stated above, we want two access points into the consult keymap: M-c normally and just c within meow-normal-mode.
+#+end_answer
+
+#+begin_aider-question
+3. Should we create migration helpers for existing projectile workflows?
+#+end_aider-question
+
+#+begin_answer
+No, this is not necessary. There are no complicated projectile workflows to replace. I suppose the one exception is that we will need to replace my custom project-switching function, which you can find in init-projectile.el.
+#+end_answer
+
+#+begin_aider-question
+4. What testing approach would you like for the transition?
+#+end_aider-question
+
+#+begin_answer
+There's no testing necessary, this isn't complicated enough to warrant formal testing.
+#+end_answer
+
+** round 2
