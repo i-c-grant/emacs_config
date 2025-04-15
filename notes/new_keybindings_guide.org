@@ -112,3 +112,19 @@ Use the project.el version.
 #+end_src
 
 * Implementation steps
+** 1. Disable projectile and set up project.el
+- Comment out projectile require in init-core.el
+- Add basic project.el config
+
+** 2. Migrate my-projectile-switch-to-aider-and-dired to project.el
+- Update function name and projectile references
+- Use project.el APIs instead of projectile
+
+** 3. Update meow-normal-mode keybindings for consult
+- Move consult commands under 'c' prefix
+- Restore default meow bindings where needed
+- Add project-switch-project binding
+
+** 4. Update leader key and remove projectile keymap
+- Remove projectile-specific keybindings
+- Update meow-keypad-leader-dispatch comment

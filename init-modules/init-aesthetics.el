@@ -42,6 +42,7 @@
                                (list (vector (regexp-quote pat)
                                              0
                                              'compose-gstring-for-graphic)))))
+
 (global-hl-line-mode 1)
 (blink-cursor-mode 0)
 (show-paren-mode 1)
