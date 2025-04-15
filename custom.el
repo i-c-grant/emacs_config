@@ -15,6 +15,7 @@
  '(debug-on-error nil)
  '(dired-listing-switches "-lha --group-directories-first")
  '(global-hl-line-mode nil)
+ '(history-length 1000)
  '(ispell-dictionary nil)
  '(key-chord-one-key-delay 0.0)
  '(lsp-completion-provider :none)
@@ -34,8 +35,8 @@
 		dockerfile-mode editorconfig ein embark-consult ess
 		exec-path-from-shell gptel hydra key-chord magit
 		marginalia markdown-mode meow minions no-littering
-		orderless org-modern org-superstar popper projectile
-		pyvenv repeat-fu ripgrep vertico vterm yaml-mode
+		orderless org-modern org-superstar popper pyvenv
+		repeat-fu ripgrep vertico vterm yaml-mode
 		zenburn-theme))
  '(projectile-mode t nil (projectile))
  '(safe-local-variable-values
