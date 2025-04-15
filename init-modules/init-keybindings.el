@@ -65,9 +65,12 @@
 (global-set-key (kbd "M-c") consult-keymap)
 
 (defun my-consult-dispatch ()
-  "Activate consult keymap for next keypress."
+  "Activate consult keymap for one keypress then exit."
   (interactive)
-  (set-transient-map consult-keymap t))
+  (let ((key (read-key "Consult: ")))
+    (let ((cmd (lookup-key consult-keymap (vector key))))
+      (when (commandp cmd)
+        (call-interactively cmd)))))
 
 (message "Global keys bound.")
 
