@@ -29,18 +29,14 @@
  '(org-src-preserve-indentation t)
  '(org-todo-keywords '((sequence "TODO" "DONE")))
  '(package-selected-packages
-   '(ESS aggressive-indent babel blacken catppuccin-theme chatgpt-shell
-	 chess citeproc consult-org-roam corfu docker dockerfile-mode
-	 eglot ein embark embark-consult ess ess-view-data
-	 exec-path-from-shell flycheck hc-zenburn-theme hydra
-	 info-mode key-chord lsp-pyright magit marginalia
-	 markdown-mode meow minions multiple-cursors no-littering
-	 orderless org org-bullets org-mode org-modern org-roam
-	 org-roam-consult org-superstar org-superstar-mode orgalist
-	 pdf-tools popper projectile pyvenv repeat-fu ripgrep
-	 tree-sitter tree-sitter-langs undo-tree use-package vertico
-	 vterm w3 w3m which-key wind-move windswap yaml-mode
-	 zenburn-theme))
+   '(ace-window babel blacken catppuccin-theme chatgpt-shell citeproc
+		company consult-org-roam corfu csv-mode docker
+		dockerfile-mode editorconfig ein embark-consult ess
+		exec-path-from-shell gptel hydra key-chord magit
+		marginalia markdown-mode meow minions no-littering
+		orderless org-modern org-superstar popper projectile
+		pyvenv repeat-fu ripgrep vertico vterm yaml-mode
+		zenburn-theme))
  '(projectile-mode t nil (projectile))
  '(safe-local-variable-values
    '((projectile-project-test-prefix
@@ -50,6 +46,8 @@
      (projectile-test-cmd . "pytest tests/")))
  '(sentence-end-double-space nil)
  '(tags-add-tables nil)
+ '(vertico-posframe-border-width 14)
+ '(vertico-posframe-width 120)
  '(vterm-min-window-width 70)
  '(warning-minimum-level :error)
  '(which-key-mode 1))

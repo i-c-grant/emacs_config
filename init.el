@@ -8,11 +8,9 @@
 (require 'init-aesthetics)
 
 ;; Load the mode modules
-(require 'init-meow)
 (require 'init-copilot)
 (require 'init-corfu)
 (require 'init-org)
-(require 'init-keychord)
 (require 'init-magit)
 (require 'init-marginalia)
 (require 'init-dired)
@@ -27,11 +25,14 @@
 (require 'init-consult)
 (require 'init-ace-window)
 
+(require 'init-meow)
+
 (require 'init-eglot)
 (require 'init-python)
 (require 'init-ess)
 
 ;; Load the keybindings
+(require 'init-keychord)
 (require 'init-keybindings)
 
 ;; Set up customization file and load customizations

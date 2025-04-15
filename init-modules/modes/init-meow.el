@@ -17,7 +17,7 @@
   :config
   ;; Remove number line hints
   (setf meow-expand-hint-remove-delay 0)
-  (setq meow-keypad-leader-dispatch (kbd "M-c"))
+  (setq meow-keypad-leader-dispatch consult-keymap)
   
   (defun meow-setup ()
     (set-meow-normal-mode-key)
@@ -83,7 +83,9 @@
      '("D" . meow-backward-delete)
      '("e" . meow-next-word)
      '("E" . meow-next-symbol)
-     '("f" . consult-buffer)
+
+     '("f" . my-consult-dispatch)
+
      '("g" . meow-cancel-selection)
      '("G" . meow-grab)
      '("i" . meow-insert)
@@ -110,7 +112,9 @@
      '("r" . meow-replace)
      '("R" . meow-swap-grab)
      '("s" . meow-kill)
+
      '("t" . meow-till)
+
      '("u" . meow-undo)
      '("U" . meow-undo-in-selection)
      '("v" . meow-visit)

@@ -129,3 +129,4 @@ Use the project.el version.
 ** 4. Update leader key and remove projectile keymap
 - Remove projectile-specific keybindings
 - Update meow-keypad-leader-dispatch comment
+  
