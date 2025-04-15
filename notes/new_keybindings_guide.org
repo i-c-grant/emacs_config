@@ -34,6 +34,21 @@ Below are some questions regarding the refactor:
 Just don't worry about them, they'll be taken care of by consult. However, the one exception is that projectile-switch-project needs to be replaced by the project.el equivalent and bound to "ESC" in meow-normal-mode.
 #+end_answer
 
+** round 3
+#+begin_src aider-question
+1. Since we're migrating from projectile to project.el, should we remove the entire projectile configuration from init-projectile.el, or maintain it for any backward compatibility?
+#+end_src
+
+#+begin_src aider-answer
+#+end_src
+
+#+begin_src aider-question
+2. In the current `my-projectile-switch-to-aider-and-dired` function, `projectile-dired` is used. Would you like to replace this with a custom dired command leveraging project.el, or continue using projectile-dired for now?
+#+end_src
+
+#+begin_src aider-answer
+#+end_src
+
 #+begin_aider-question
 2. Are there any keybinding conflicts to be aware of between consult/project.el/meow?
 #+end_aider-question
