@@ -61,22 +61,13 @@
 (define-key consult-keymap (kbd "n") 'consult-focus-lines)
 (define-key consult-keymap (kbd "c") 'consult-outline)
 (define-key consult-keymap (kbd "i") 'consult-imenu)
+
 (global-set-key (kbd "M-c") consult-keymap)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+(defun my-consult-dispatch ()
+  "Activate consult keymap for next keypress."
+  (interactive)
+  (set-transient-map consult-keymap t))
 
 (message "Global keys bound.")
 
