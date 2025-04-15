@@ -16,7 +16,9 @@ I'm not really using the more complicate projectile.el stuff; project.el should 
   - consult-ripgrep will be M-c s
   - consult-line will be M-c x
   - consult-focus-lines will be M-c n
-  - etc. 
+  - consult-outline will be M-c c
+  - consult-imenu will be M-c i
+  - etc.
     
   - Important: within meow-normal-mode, the prefix will just be c
   
