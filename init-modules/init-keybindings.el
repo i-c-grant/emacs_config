@@ -52,6 +52,13 @@
 (global-set-key (kbd "C-x 4 b") 'consult-buffer-other-window)
 (global-set-key (kbd "M-g g") 'consult-goto-line)
 (global-set-key (kbd "M-g b") 'consult-bookmark)
+(global-set-key (kbd "M-c b") 'consult-buffer)
+(global-set-key (kbd "M-c f") 'consult-find)
+(global-set-key (kbd "M-c s") 'consult-ripgrep)
+(global-set-key (kbd "M-c x") 'consult-line)
+(global-set-key (kbd "M-c n") 'consult-focus-lines)
+(global-set-key (kbd "M-c c") 'consult-outline)
+(global-set-key (kbd "M-c i") 'consult-imenu)
 
 
 
