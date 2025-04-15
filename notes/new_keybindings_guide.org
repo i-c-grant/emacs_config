@@ -59,3 +59,32 @@ There's no testing necessary, this isn't complicated enough to warrant formal te
 #+end_answer
 
 ** round 2
+#+begin_src aider-question
+1. The existing my-projectile-switch-to-aider-and-dired function in init-projectile.el needs to be migrated to project.el. Should we:
+   a) Create a similar my-project-switch-to-aider-and-dired using project.el APIs?
+   b) Split it into separate functions for aider/dired/magit?
+   c) Keep it as-is but just change projectile- references to project-?
+#+end_src
+
+#+begin_answer
+#+end_answer
+
+#+begin_src aider-question
+2. In init-meow.el's meow-normal-define-key, the 'f' key is currently bound to consult-buffer. The design doc says consult-buffer should be under M-c b. Should we:
+   a) Move consult-buffer to leader key binding and keep 'f' free?
+   b) Create a wrapper that works in both modes?
+   c) Leave it as-is since meow-normal-mode is special?
+#+end_src
+
+#+begin_answer 
+#+end_answer
+
+#+begin_src aider-question
+3. The projectile-command-map keybindings in init-projectile.el need migration to project.el. Should we:
+   a) Move them to project-prefix-map?
+   b) Create a custom map for our project-related workflows?
+   c) Use consult's keymap instead?
+#+end_src
+
+#+begin_answer
+#+end_answer
