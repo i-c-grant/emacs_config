@@ -1,0 +1,22 @@
+#+TITLE: Instructions for new keybinding scheme
+* Background
+Here's a note describing the problem I'm trying to solve here.
+#+begin_quote
+My current UI situation is kind of confused, because I'm a bit stuck between meow, projectile, and consult. I use meow-normal-mode for access to my most commonly-used commands, which include some consult commands like consult-buffer, consult-line, etc. Then, I have a separate keymap accessible from within meow-normal-mode, initiated by pressing the space bar. This accesses the projectile mode map (because meow-keypad-leader-dispatch is set to C-p, which is the projectile keymap prefix). But recently I have been discovering that many projectile features are implemented better by consult anyway, so I've started replacing some of the stuff in this keymap with consult alternatives. This has led to a somewhat confusing situation. I guess it's not crazy to have meow normal mode to access the most-used consult stuff and then spacebar as a prefix within meow-normal to access project-specific commands. In theory I could just get rid of projectile and try to lean on consult, but I think it has a pretty rich featureset too. Not sure how to simplify. I guess the only thing I really don't know how to replicate is "switching to project," but maybe project.el can do that?
+#+end_quote
+
+* Decisions
+Here are some decisions I've made after thinking about the above problem.
+** Replace projectile with project.el
+I'm not really using the more complicate projectile.el stuff; project.el should suffice, because I'm using consult for all the functionality I was previously getting from projectile.
+
+** Consolidate consult commands under the prefix M-c
+  - consult-buffer will be M-c b
+  - consult-find will be M-c f
+  - consult-ripgrep will be M-c s
+  - consult-line will be M-c x
+  - consult-focus-lines will be M-c n
+  - etc. 
+    
+  - Important: within meow-normal-mode, the prefix will just be c
+  
