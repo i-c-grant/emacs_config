@@ -31,7 +31,7 @@ Below are some questions regarding the refactor:
 #+end_src
 
 #+begin_answer
-Just don't worry about them, they'll be taken care of by consult. However, the one exception is that projectile-switch-project needs to be replaced by the project.el equivalent and bound to "p" in meow-normal-mode.
+Just don't worry about them, they'll be taken care of by consult. However, the one exception is that projectile-switch-project needs to be replaced by the project.el equivalent and bound to "ESC" in meow-normal-mode.
 #+end_answer
 
 #+begin_aider-question
@@ -67,6 +67,7 @@ There's no testing necessary, this isn't complicated enough to warrant formal te
 #+end_src
 
 #+begin_answer
+You should make a similar function that uses project.el (included in base emacs) rather than projectile.
 #+end_answer
 
 #+begin_src aider-question
@@ -77,6 +78,7 @@ There's no testing necessary, this isn't complicated enough to warrant formal te
 #+end_src
 
 #+begin_answer 
+f can go back to its default, meow-find, and consult-buffer can be M-c b as requested.
 #+end_answer
 
 #+begin_src aider-question
@@ -87,4 +89,7 @@ There's no testing necessary, this isn't complicated enough to warrant formal te
 #+end_src
 
 #+begin_answer
+We're going to use consult's keymaps instead, so you don't need to worry about porting projectile's keymap. The point of this refactor is that we're not really using that keymap. The meow-keypad-leader-dispatch doesn't need to be C-c p, we'll need to think of some better use for it or just leave it as its default.
+
+However, I noticed in your thinking that you pointed out that p is currently meow-yank, a potential conflict with the project.el switch project. That's a good point, so let's make the switch project key ESC instead of p, leaving p for meow-yank. I've updated the answer to the relevant question above to reflect this change.
 #+end_answer
