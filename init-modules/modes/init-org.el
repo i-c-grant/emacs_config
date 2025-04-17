@@ -58,7 +58,31 @@ Only active if the file is an org file."
       (bookmark-jump "todo")
     (error (message "No todo bookmark set."))))
 
-(provide 'init-org)
+;; Org capture templates
+(setq org-capture-templates
+      '(("l" "Send to life inbox" entry
+         (file+headline "~/org/life.org" "Inbox")
+         "* TODO %?\n"
+         :empty-lines 1)
+	("w" "Send to work inbox" entry
+         (file+headline "~/org/work.org" "Inbox")
+         "* TODO %?\n"
+         :empty-lines 1)))
 
+(setq org-agenda-files
+      '("~/org/life.org"
+	"~/org/work.org"))
+
+(use-package denote
+  :ensure t
+  :custom
+  (denote-directory (concat org-directory "/notes")))
+
+(use-package consult-denote)
+
+;; Set keybindings for setting and jumping to the todo bookmark
 (global-set-key (kbd "C-*") 'my-set-todo-bookmark)
 (global-set-key (kbd "C-8") 'my-jump-to-todo)
+
+(provide 'init-org)
+

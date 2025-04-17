@@ -34,6 +34,8 @@
 
 (global-set-key (kbd "<escape>") 'project-switch-project)
 
+(global-set-key (kbd "C-c c") 'org-capture)
+
 (message "Global keys bound.")
 
 (provide 'init-keybindings)
