@@ -90,7 +90,7 @@ Only active if the file is an org file."
     (unless project-name
       (error "Not in a project"))
     (let ((initial (format ":project:.*:%s:" project-name)))
-      (consult-find (denote-directory) initial)))
+      (consult-find (denote-directory) initial))))
 
 (global-set-key (kbd "C-c n f") 'consult-denote-find-in-project)
 
