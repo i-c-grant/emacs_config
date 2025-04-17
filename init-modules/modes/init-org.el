@@ -94,7 +94,11 @@ Only active if the file is an org file."
 
 (global-set-key (kbd "C-c n f") 'consult-denote-find-in-project)
 
-(defun my-denote-project-note ()
+(defun sanitize-project-name (name)
+  "Return NAME with all non-alphanumeric characters removed."
+  (replace-regexp-in-string "[^[:alnum:]]" "" name))
+
+(defun my-denote-project-note (
   "Create a denote note tagged with current project name."
   (interactive)
   (let* ((project-root (when (project-current) (project-root (project-current))))
@@ -106,7 +110,7 @@ Only active if the file is an org file."
     (denote
      (read-string "Note title: ")
      ;; Denote will sanitize project-name automatically
-     (list "project" project-name))))
+     (list "project" (sanitize-project-name project-name))))
 
 
 
