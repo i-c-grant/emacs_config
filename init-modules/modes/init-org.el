@@ -80,7 +80,7 @@ Only active if the file is an org file."
 
 (use-package consult-denote)
 
-(defun consult-denote-find-in-project ()
+(defun project-find-note ()
   "Find a Denote note in `denote-directory` tagged with the current project."
   (interactive)
   (let* ((project-root (when (project-current) (project-root (project-current))))
