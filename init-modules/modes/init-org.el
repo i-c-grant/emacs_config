@@ -81,16 +81,29 @@ Only active if the file is an org file."
 (use-package consult-denote)
 
 (defun consult-denote-find-in-project ()
-  "Run consult-denote, searching only notes tagged with the current project."
+  "Find a Denote note in `denote-directory` tagged with the current project."
   (interactive)
   (let* ((project-root (when (project-current) (project-root (project-current))))
          (project-name (when project-root
                          (file-name-nondirectory
-                          (directory-file-name project-root)))))
-    (unless project-name
+                          (directory-file-name project-root))))
+         (sanitized (when project-name (sanitize-project-name project-name))))
+    (unless sanitized
       (error "Not in a project"))
-    (let ((initial (format ":project:.*:%s:" (sanitize-project-name project-name))))
-      (consult-find (denote-directory) initial))))
+    (let* ((files (directory-files-recursively (denote-directory) ""))
+           (filtered (seq-filter
+                      (lambda (f)
+                        (and (string-match-p "project" (file-name-nondirectory f))
+                             (string-match-p sanitized (file-name-nondirectory f))))
+                      files))
+           (choice (consult--read filtered
+                                  :prompt "Project note: "
+                                  :sort nil
+                                  :require-match t
+                                  :category 'file
+                                  :state (consult--file-preview))))
+      (when choice
+        (find-file choice)))))
 
 (global-set-key (kbd "C-c n f") 'consult-denote-find-in-project)
 
