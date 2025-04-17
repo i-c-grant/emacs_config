@@ -98,7 +98,7 @@ Only active if the file is an org file."
   "Return NAME with all non-alphanumeric characters removed."
   (replace-regexp-in-string "[^[:alnum:]]" "" name))
 
-(defun my-denote-project-note (
+(defun my-denote-project-note ()
   "Create a denote note tagged with current project name."
   (interactive)
   (let* ((project-root (when (project-current) (project-root (project-current))))
@@ -110,7 +110,7 @@ Only active if the file is an org file."
     (denote
      (read-string "Note title: ")
      ;; Denote will sanitize project-name automatically
-     (list "project" (sanitize-project-name project-name))))
+     (list "project" (sanitize-project-name project-name)))))
 
 
 
