@@ -80,6 +80,19 @@ Only active if the file is an org file."
 
 (use-package consult-denote)
 
+(defun consult-denote-find-in-project ()
+  "Run consult-denote, searching only notes tagged with the current project."
+  (interactive)
+  (let* ((project-root (when (project-current) (project-root (project-current))))
+         (project-name (when project-root
+                         (file-name-nondirectory
+                          (directory-file-name project-root)))))
+    (unless project-name
+      (error "Not in a project"))
+    (consult-denote :keywords (list "project" project-name))))
+
+(global-set-key (kbd "C-c n f") 'consult-denote-find-in-project)
+
 (defun my-denote-project-note ()
   "Create a denote note tagged with current project name."
   (interactive)
