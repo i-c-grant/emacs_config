@@ -80,7 +80,22 @@ Only active if the file is an org file."
 
 (use-package consult-denote)
 
-;; Set keybindings for setting and jumping to the todo bookmark
+(defun my-denote-project-note ()
+  "Create a denote note tagged with current project name."
+  (interactive)
+  (let* ((project-root (when (project-current) (project-root (project-current))))
+         (project-name (when project-root 
+                         (file-name-nondirectory 
+                          (directory-file-name project-root)))))
+    (unless project-root
+      (error "Not in a project"))
+    (denote
+     (read-string "Note title: ")
+     ;; Denote will sanitize project-name automatically
+     (list "project" project-name))))
+
+;; Set keybindings for project notes and todo bookmarks
+;; (global-set-key (kbd "C-c n p") 'my-denote-project-note)
 (global-set-key (kbd "C-*") 'my-set-todo-bookmark)
 (global-set-key (kbd "C-8") 'my-jump-to-todo)
 
