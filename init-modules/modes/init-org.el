@@ -94,6 +94,8 @@ Only active if the file is an org file."
      ;; Denote will sanitize project-name automatically
      (list "project" project-name))))
 
+
+
 ;; Set keybindings for project notes and todo bookmarks
 ;; (global-set-key (kbd "C-c n p") 'my-denote-project-note)
 (global-set-key (kbd "C-*") 'my-set-todo-bookmark)
