@@ -31,14 +31,14 @@
  '(org-todo-keywords '((sequence "TODO" "DONE")))
  '(package-selected-packages
    '(ace-window babel blacken catppuccin-theme chatgpt-shell citeproc
-		company consult-org-roam corfu csv-mode docker
-		dockerfile-mode editorconfig ein embark-consult ess
-		exec-path-from-shell gptel hydra key-chord magit
-		marginalia markdown-mode meow minions no-littering
-		orderless org-modern org-superstar popper pyvenv
-		repeat-fu ripgrep vertico vterm yaml-mode
+		company consult-denote consult-org-roam corfu csv-mode
+		denote docker dockerfile-mode editorconfig ein
+		embark-consult ess exec-path-from-shell gptel hydra
+		key-chord magit marginalia markdown-mode meow minions
+		no-littering orderless org-modern org-superstar popper
+		pyvenv repeat-fu ripgrep vertico vterm yaml-mode
 		zenburn-theme))
- '(projectile-mode t nil (projectile))
+ '(projectile-mode t)
  '(safe-local-variable-values
    '((projectile-project-test-prefix
       . "/home/ian/miniconda3/bin/conda run -n floodnet-client")
