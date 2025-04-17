@@ -89,7 +89,8 @@ Only active if the file is an org file."
                           (directory-file-name project-root)))))
     (unless project-name
       (error "Not in a project"))
-    (consult-denote-find :keywords (list "project" project-name))))
+    (let ((initial (format ":project:.*:%s:" project-name)))
+      (consult-find (denote-directory) initial)))
 
 (global-set-key (kbd "C-c n f") 'consult-denote-find-in-project)
 
