@@ -102,10 +102,17 @@
           (replace-match to nil t))))))
 ;; Launcher and Copy Buffer Path
 
+(defun my-project-name ()
+  "Return the name of the current project."
+  (let ((project (project-current)))
+    (when project
+      (file-name-nondirectory
+       (directory-file-name (project-root project))))))
+
 (defun launch-aider ()
   "Launch aider in a vterm window using the default config."
   (interactive)
-  (let* ((project-name (projectile-project-name))
+  (let* ((project-name (my-project-name))
          (buffer-name (format "*aider: %s*" project-name))
          (vterm-buffer (vterm buffer-name)))
     (with-current-buffer vterm-buffer
