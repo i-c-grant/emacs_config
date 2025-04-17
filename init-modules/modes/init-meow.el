@@ -125,26 +125,18 @@
      '("y" . meow-save)
      '("Y" . kill-ring-save)
      '("z" . meow-pop-selection)
+
+     '("<escape>" . project-switch-project)
+
      ;; '("h" . repeat)
      '("'" . meow-reverse)
-     '("/" . avy-goto-char)))
-  
+     '("/" . avy-goto-char))
+
+    (meow-motion-define-key
+     '("<escape>" . project-switch-project))
+)
+
   (meow-setup)
   (meow-global-mode 1))
-
-;; Repeat-fu to allow multicommand repeats
-(use-package repeat-fu
-  :commands (repeat-fu-mode repeat-fu-execute)
-
-  :config
-  (setq repeat-fu-preset 'meow)
-
-  :hook
-  ((meow-mode)
-   .
-   (lambda ()
-     (when (and (not (minibufferp)) (not (derived-mode-p 'special-mode)))
-       (repeat-fu-mode)
-       (define-key meow-normal-state-keymap (kbd "h") 'repeat-fu-execute)))))
 
 (provide 'init-meow)
