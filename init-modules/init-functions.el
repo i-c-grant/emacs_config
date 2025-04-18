@@ -116,7 +116,7 @@
          (buffer-name (format "*aider: %s*" project-name))
          (vterm-buffer (vterm buffer-name)))
     (with-current-buffer vterm-buffer
-      (vterm-send-string "aider --config ~/.aider/.aider.conf.yml")
+      (vterm-send-string "conda activate aider-env && aider --config ~/.aider/.aider.conf.yml")
       (vterm-send-return))))
 
 (defun show-file-name ()
