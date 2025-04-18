@@ -35,6 +35,7 @@
 (global-set-key (kbd "<escape>") 'project-switch-project)
 
 (global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
 
 (message "Global keys bound.")
 

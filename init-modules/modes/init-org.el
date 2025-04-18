@@ -13,7 +13,9 @@
           ("C-c f" . insert-citation-needed))
 
   :hook ((org-mode . visual-line-mode)
-	 (org-mode . corfu-mode)))
+	 ;; disable corfu
+	 (org-mode . corfu-mode)
+	 (org-mode . org-indent-mode)))
           
 (setq org-directory "~/org")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
@@ -34,11 +36,6 @@
   (set-face-foreground face (face-attribute 'default :background)))
 
 (set-face-background 'fringe (face-attribute 'default :background))
-
-(use-package org-roam)
-(org-roam-db-autosync-mode)
-
-(use-package consult-org-roam)
 
 (defun my-set-todo-bookmark ()
   "Set the current file as your active todo list using a bookmark named 'todo'.
@@ -79,6 +76,8 @@ Only active if the file is an org file."
   (denote-directory (concat org-directory "/notes")))
 
 (use-package consult-denote)
+(use-package denote-org)
+(use-package denote-journal)
 
 (defun project-find-note ()
   "Find a Denote note in `denote-directory` tagged with the current project."
@@ -124,8 +123,6 @@ Only active if the file is an org file."
      (read-string "Note title: ")
      ;; Denote will sanitize project-name automatically
      (list "project" (sanitize-project-name project-name)))))
-
-
 
 ;; Set keybindings for project notes and todo bookmarks
 ;; (global-set-key (kbd "C-c n p") 'my-denote-project-note)
