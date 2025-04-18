@@ -23,21 +23,26 @@
    ["[/home/ian/anaconda3/envs/geo_dev/lib/python3.9/site-packages/geopandas/]"])
  '(lsp-pyright-venv-path "/home/ian/anaconda3/envs")
  '(nil nil t)
- '(org-agenda-files
-   '("/home/ian/Documents/Ni_Meister_Lab/tallo_analysis/notes/notebook.org"))
+ '(org-agenda-files '("~/org/life.org" "~/org/work.org"))
  '(org-babel-load-languages '((python . t) (R . t)))
  '(org-babel-python-command "python3")
+ '(org-modern-block-fringe 2)
  '(org-src-preserve-indentation t)
  '(org-todo-keywords '((sequence "TODO" "DONE")))
  '(package-selected-packages
    '(ace-window babel blacken catppuccin-theme chatgpt-shell citeproc
 		company consult-denote consult-org-roam corfu csv-mode
-		denote docker dockerfile-mode editorconfig ein
-		embark-consult ess exec-path-from-shell gptel hydra
-		key-chord magit marginalia markdown-mode meow minions
-		no-littering orderless org-modern org-superstar popper
-		pyvenv repeat-fu ripgrep vertico vterm yaml-mode
+		denote denote-journal denote-org docker
+		dockerfile-mode editorconfig ein embark-consult ess
+		exec-path-from-shell gptel hydra key-chord magit
+		marginalia markdown-mode meow minions no-littering
+		orderless org-modern org-superstar popper pyvenv
+		repeat-fu ripgrep vertico vterm yaml-mode
 		zenburn-theme))
+ '(package-vc-selected-packages
+   '((org-modern-indent :url
+			"https://github.com/jdtsmith/org-modern-indent"
+			:branch "main")))
  '(projectile-mode t)
  '(safe-local-variable-values
    '((projectile-project-test-prefix
