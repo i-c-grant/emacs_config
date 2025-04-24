@@ -66,9 +66,7 @@ Only active if the file is an org file."
          "* TODO %?\n"
          :empty-lines 1)))
 
-(setq org-agenda-files
-      '("~/org/life.org"
-	"~/org/work.org"))
+(setq org-agenda-files '("~/org/todo.org"))
 
 (use-package denote
   :ensure t
