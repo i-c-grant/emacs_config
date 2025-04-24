@@ -25,6 +25,19 @@
   :hook (org-mode . org-modern-mode)
 )
 
+(use-package org-ql
+  :ensure t)
+
+(defun my-org-ql-search-recursive (query)
+  "Run `org-ql-search' over every .org file recursively in `org-directory'."
+  (interactive "sorg-ql query: ")
+  (let ((files (directory-files-recursively org-directory "\\.org$")))
+    (org-ql-search files query
+      :narrow nil
+      :super-groups '((:auto-tags))
+      :sort 'date
+      :title    (format "Org-QL “%s”" query))))
+
 (modify-all-frames-parameters
  '((right-divider-width . 40)
    (internal-border-width . 40)))
