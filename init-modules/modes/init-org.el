@@ -102,8 +102,8 @@ Only active if the file is an org file."
   "Copy the current Org subtree into a new Denote note.
 TITLE defaults to the heading text.  FILE-TAGS is read from the
 buffer’s #+FILETAGS:.  PROJECT is chosen from FILE-TAGS (excluding
-\"project\").  The new note will carry all FILE-TAGS plus
-\"task\" and PROJECT."
+\"project\").  The new note will carry only the tags
+\"project\", \"task\", and PROJECT."
   (interactive
    (let* ((heading    (nth 4 (org-heading-components)))
           (title      (read-string (format "Note title (default %s): " heading)
@@ -118,7 +118,7 @@ buffer’s #+FILETAGS:.  PROJECT is chosen from FILE-TAGS (excluding
           (proj-tags  (delete "project" file-tags))
           (project    (completing-read "Project: " proj-tags nil t)))
      (list title file-tags project)))
-  (let* ((tags     (append file-tags (list "task" project)))
+  (let* ((tags     (list "project" project "task"))
          (subtree  (save-excursion
                      (org-back-to-heading t)
                      (let ((beg (point)))
