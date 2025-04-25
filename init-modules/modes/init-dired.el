@@ -1,5 +1,5 @@
 (require 'dired)
-(require 'dired-x')
+(require 'dired-x)
 
 ;; Hide all “dot-files” in Dired buffers by default
 (setq dired-omit-files
