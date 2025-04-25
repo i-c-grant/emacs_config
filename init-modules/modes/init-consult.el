@@ -111,13 +111,6 @@
                       consult--source-special-buffer
                       consult--source-aider-buffer))))
 
-
-;; Consult bindings
-(global-set-key (kbd "C-x b") 'consult-buffer)
-(global-set-key (kbd "C-x 4 b") 'consult-buffer-other-window)
-(global-set-key (kbd "M-g g") 'consult-goto-line)
-(global-set-key (kbd "M-g b") 'consult-bookmark)
-
 (defvar consult-keymap (make-sparse-keymap) "Keymap for Consult commands.")
 (define-key consult-keymap (kbd "b") 'consult-buffer)
 (define-key consult-keymap (kbd "F") 'consult-find)
@@ -127,6 +120,8 @@
 (define-key consult-keymap (kbd "c") 'consult-outline)
 (define-key consult-keymap (kbd "i") 'consult-imenu)
 (define-key consult-keymap (kbd "r") 'consult-bookmark)
+(define-key consult-keymap (kbd "O") 'my-org-ql-search-recursive)
+(define-key consult-keymap (kbd "o") 'consult-denote-find)
 
 ;; Also a few project.el bindings in the consult keymap
 (define-key consult-keymap (kbd "f") 'project-find-file)
