@@ -23,9 +23,17 @@
    ["[/home/ian/anaconda3/envs/geo_dev/lib/python3.9/site-packages/geopandas/]"])
  '(lsp-pyright-venv-path "/home/ian/anaconda3/envs")
  '(nil nil t)
- '(org-agenda-files '("~/org/life.org" "~/org/work.org"))
+ '(org-agenda-files '("~/org/tasks.org"))
+ '(org-archive-location "archive.org::datetree/")
  '(org-babel-load-languages '((python . t) (R . t)))
  '(org-babel-python-command "python3")
+ '(org-capture-templates
+   '(("l" "Send to life todo" entry
+      (file+headline "~/org/tasks.org" "Life") "* TODO %?\12"
+      :empty-lines 1)
+     ("w" "Send to work todo" entry
+      (file+headline "~/org/tasks.org" "Work") "* TODO %?\12"
+      :empty-lines 1)) t)
  '(org-modern-block-fringe 2)
  '(org-src-preserve-indentation t)
  '(org-todo-keywords '((sequence "TODO" "DONE")))
@@ -36,8 +44,8 @@
 		dockerfile-mode editorconfig ein embark-consult ess
 		exec-path-from-shell gptel hydra key-chord magit
 		marginalia markdown-mode meow minions no-littering
-		orderless org-modern org-superstar popper pyvenv
-		repeat-fu ripgrep vertico vterm yaml-mode
+		orderless org-modern org-ql org-superstar popper
+		pyvenv repeat-fu ripgrep vertico vterm yaml-mode
 		zenburn-theme))
  '(package-vc-selected-packages
    '((org-modern-indent :url
