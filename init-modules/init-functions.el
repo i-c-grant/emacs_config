@@ -110,11 +110,11 @@
        (directory-file-name (project-root project))))))
 
 (defun launch-aider ()
-  "Launch aider in a vterm window using the default config."
+  "Launch aider in a vterm buffer in other window using the default config."
   (interactive)
   (let* ((project-name (my-project-name))
          (buffer-name (format "*aider: %s*" project-name))
-         (vterm-buffer (vterm buffer-name)))
+         (vterm-buffer (vterm-other-window buffer-name)))
     (with-current-buffer vterm-buffer
       (vterm-send-string "conda activate aider-env && aider --config ~/.aider/.aider.conf.yml")
       (vterm-send-return))))
