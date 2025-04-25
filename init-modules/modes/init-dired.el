@@ -1,5 +1,10 @@
 (require 'dired)
-(require 'dired-x)
+(require 'dired-x')
+
+;; Hide all “dot-files” in Dired buffers by default
+(setq dired-omit-files
+      (concat dired-omit-files "\\|^\\..*"))
+(setq dired-omit-verbose nil)
 
 (defun enable-dired-omit-mode ()
   "Enable omit mode in Dired buffers."
