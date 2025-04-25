@@ -101,20 +101,14 @@ Only active if the file is an org file."
 (defun my-denote-copy-org-subtree (title file-tags project)
   "Copy the current Org subtree into a new Denote note.
 TITLE defaults to the heading text.  FILE-TAGS is read from the
-buffer’s #+FILETAGS:.  PROJECT is chosen from FILE-TAGS (excluding
+filename via `my-denote-filename-tags`.  PROJECT is chosen from FILE-TAGS (excluding
 \"project\").  The new note will carry only the tags
 \"project\", \"task\", and PROJECT."
   (interactive
    (let* ((heading    (nth 4 (org-heading-components)))
           (title      (read-string (format "Note title (default %s): " heading)
                                    nil nil heading))
-          (tag-line   (or (save-excursion
-                             (goto-char (point-min))
-                             (when (re-search-forward
-                                    "^#\\+FILETAGS:[ \t]*\\(.*\\)$" nil t)
-                               (match-string 1)))
-                           ""))
-          (file-tags  (split-string tag-line "[ \t]+" t))
+          (file-tags  (my-denote-filename-tags))
           (proj-tags  (delete "project" file-tags))
           (project    (completing-read "Project: " proj-tags nil t)))
      (list title file-tags project)))
