@@ -96,6 +96,43 @@ Only active if the file is an org file."
 
 (use-package consult-denote)
 (use-package denote-org)
+
+;;;###autoload
+(defun my-denote-copy-org-subtree (title file-tags project)
+  "Copy the current Org subtree into a new Denote note.
+TITLE defaults to the heading text.  FILE-TAGS is read from the
+buffer’s #+FILETAGS:.  PROJECT is chosen from FILE-TAGS (excluding
+\"project\").  The new note will carry all FILE-TAGS plus
+\"task\" and PROJECT."
+  (interactive
+   (let* ((heading    (nth 4 (org-heading-components)))
+          (title      (read-string (format "Note title (default %s): " heading)
+                                   nil nil heading))
+          (tag-line   (or (save-excursion
+                             (goto-char (point-min))
+                             (when (re-search-forward
+                                    "^#\\+FILETAGS:[ \t]*\\(.*\\)$" nil t)
+                               (match-string 1)))
+                           ""))
+          (file-tags  (split-string tag-line "[ \t]+" t))
+          (proj-tags  (delete "project" file-tags))
+          (project    (completing-read "Project: " proj-tags nil t)))
+     (list title file-tags project)))
+  (let* ((tags     (append file-tags (list "task" project)))
+         (subtree  (save-excursion
+                     (org-back-to-heading t)
+                     (let ((beg (point)))
+                       (org-end-of-subtree t t)
+                       (buffer-substring-no-properties beg (point)))))
+         (newfile  (denote title tags)))
+    (with-current-buffer (find-file-noselect newfile)
+      (goto-char (point-max))
+      (insert "\n" subtree)
+      (save-buffer)
+      (kill-buffer))))
+
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c n t") #'my-denote-copy-org-subtree))
 (use-package denote-journal)
 
 (defun project-find-note ()
