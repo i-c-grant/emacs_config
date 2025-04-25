@@ -186,6 +186,8 @@ maps to tag “silverbulletinpolls”."
                                                        (buffer-file-name))
                                                       dest-dir)))
               (make-directory dest-dir t)
+              (when (file-exists-p dest-file)
+                (delete-file dest-file))
               (copy-file (buffer-file-name) dest-file t)
 	      ;; set the file to read-only
 	      (set-file-modes dest-file #o444)
