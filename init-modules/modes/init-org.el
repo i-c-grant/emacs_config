@@ -77,6 +77,12 @@ Only active if the file is an org file."
 	("w" "Send to work inbox" entry
          (file+headline "~/org/work.org" "Inbox")
          "* TODO %?\n"
+         :empty-lines 1)
+        ;; ----------------------------------------------------------------------------
+        ;; Log a workout: date-tree + a 4-column table
+        ("g" "Log workout" entry
+         (file+datetree "~/org/workouts.org")
+         "* Workout on %U\n| Exercise | Weight | Sets | Reps |\n|-\n|  |  |  |  |"
          :empty-lines 1)))
 
 ;; We don't need the file indicator in the agenda
