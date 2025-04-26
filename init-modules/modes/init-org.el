@@ -21,6 +21,10 @@
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (setq org-startup-folded t)
 
+;; Set todo keywords
+(setq org-todo-keywords
+      '((sequence "TODO(t!)" "IN-PROGRESS(i)" "WAIT(w@)" "ASSIGN(a!)" "|" "DONE(d!)" "CANCELLED(c@)")))
+
 (use-package org-modern
   :hook (org-mode . org-modern-mode)
 )
@@ -238,4 +242,3 @@ maps to tag “silverbulletinpolls”."
 (global-set-key (kbd "C-8") 'my-jump-to-todo)
 
 (provide 'init-org)
-
