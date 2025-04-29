@@ -23,7 +23,7 @@
 
 ;; Set todo keywords
 (setq org-todo-keywords
-      '((sequence "TODO(t!)" "IN-PROGRESS(i)" "WAIT(w@)" "ASSIGN(a!)" "|" "DONE(d!)" "CANCELLED(c@)")))
+      '((sequence "TODO(t!)" "IN-PROGRESS(i!)" "WAIT(w@)" "ASSIGN(a!)" "|" "DONE(d!)" "CANCELLED(c@)")))
 
 (use-package org-modern
   :hook (org-mode . org-modern-mode)
@@ -75,19 +75,34 @@ Only active if the file is an org file."
 ;; Org capture templates
 (setq org-capture-templates
       '(("l" "Send to life inbox" entry
-         (file+headline "~/org/life.org" "Inbox")
+         (file+headline "~/org/tasks.org" "Life")
          "* TODO %?\n"
          :empty-lines 1)
 	("w" "Send to work inbox" entry
-         (file+headline "~/org/work.org" "Inbox")
+         (file+headline "~/org/tasks.org" "Work")
          "* TODO %?\n"
          :empty-lines 1)
         ;; ----------------------------------------------------------------------------
         ;; Log a workout: date-tree + a 4-column table
         ("g" "Log workout" entry
          (file+datetree "~/org/workouts.org")
-         "* Workout on %U\n| Exercise | Weight | Sets | Reps |\n|-\n|  |  |  |  |"
-         :empty-lines 1)))
+         "* Workout on %U\n| Exercise | Weight | Sets | Reps | Notes | \n|-\n||||||"
+         :empty-lines 1)
+
+	("r" "Log a run" entry
+	 (file+datetree "~/org/runs.org")
+	 "* Run on %U\n| Length | Time | Pace | Avg. HR | Notes | \n|-\n||||||")))
+
+(defun my-align-tables-in-buffer ()
+  "Align all Org tables in the buffer."
+  (when (derived-mode-p 'org-mode)
+    (message "Running hook")
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "^ *|.*|.*$" nil t)
+        (ignore-errors (org-table-align))))))
+
+(add-hook 'org-capture-mode-hook #'my-align-tables-in-buffer)
 
 ;; We don't need the file indicator in the agenda
 ;; since we're only reading from one file.
