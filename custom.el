@@ -27,16 +27,10 @@
  '(org-archive-location "archive.org::datetree/")
  '(org-babel-load-languages '((python . t) (R . t)))
  '(org-babel-python-command "python3")
- '(org-capture-templates
-   '(("l" "Send to life todo" entry
-      (file+headline "~/org/tasks.org" "Life") "* TODO %?\12"
-      :empty-lines 1)
-     ("w" "Send to work todo" entry
-      (file+headline "~/org/tasks.org" "Work") "* TODO %?\12"
-      :empty-lines 1)) t)
+ '(org-log-done 'time)
+ '(org-log-into-drawer t)
  '(org-modern-block-fringe 2)
  '(org-src-preserve-indentation t)
- '(org-todo-keywords '((sequence "TODO" "DONE")))
  '(package-selected-packages
    '(ace-window babel blacken catppuccin-theme chatgpt-shell citeproc
 		company consult-denote consult-org-roam corfu csv-mode

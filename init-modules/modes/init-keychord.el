@@ -17,7 +17,6 @@
   ;; Keychords for copilot
   (key-chord-define copilot-mode-map "kl" 'copilot-accept-completion)
   (key-chord-define-global "KL" 'copilot-mode)
-  (key-chord-define minibuffer-mode-map "df" 'minibuffer-keyboard-quit)
-  )
+  (key-chord-define minibuffer-mode-map "df" 'minibuffer-keyboard-quit))
 
 (provide 'init-keychord)

@@ -12,11 +12,11 @@
 (add-hook 'dired-mode-hook 'enable-dired-omit-mode)
 
 (define-key dired-mode-map (kbd ".") 'dired-omit-mode)
-(define-key dired-mode-map (kbd "/") 'dired-omit-mode)
 (define-key dired-mode-map (kbd "K") 'dired-up-directory)
 (define-key dired-mode-map (kbd "h") 'dired-do-kill-lines)
 (define-key dired-mode-map (kbd "P") 'dired-prev-marked-file)
 (define-key dired-mode-map (kbd "N") 'dired-next-marked-file)
+(define-key dired-mode-map (kbd "f") 'my-consult-dispatch)
 
 (setq dired-listing-switches "-alh --group-directories-first")
 
