@@ -1,5 +1,4 @@
 ;; Insertion Commands
-
 (defun insert-curly-brackets ()
   "Insert curly brackets and place cursor between them."
   (interactive)
@@ -217,5 +216,13 @@ If REGION is provided, unfill that region."
   (let ((fill-column (point-max))
         (emacs-lisp-docstring-fill-column t))
     (fill-paragraph nil region)))
+
+(defun one-side-weight-to-barbell ()
+  "Convert a one-sided weight to a barbell weight."
+  (interactive)
+  (let ((weight (read-number "Weight on one side: ")))
+    (if (> weight 0)
+	(message "Barbell weight: %d" (+ (* 2 weight) 45))
+      (message "Invalid weight"))))
 
 (provide 'init-functions)
