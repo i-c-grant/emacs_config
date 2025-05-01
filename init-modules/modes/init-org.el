@@ -44,7 +44,15 @@
 (defun my-org-ql-search-recursive (query)
   "Run `org-ql-search' over every .org file recursively in `org-directory'."
   (interactive "sorg-ql query: ")
-  (let ((files (directory-files-recursively org-directory "\\.org$")))
+  (let ((files (directory-files-recursively
+                 org-directory
+                 "\\.org$"
+                 nil
+                 (lambda (f)
+                   (let ((name (file-name-nondirectory f)))
+                     (not (or (string-suffix-p "~" name)
+                              (and (string-prefix-p "#" name)
+                                   (string-suffix-p "#" name)))))))))
     (org-ql-search files query
       :narrow nil
       :super-groups '((:auto-tags))
