@@ -32,6 +32,15 @@
 (use-package org-ql
   :ensure t)
 
+(require 'org-habit)
+(add-to-list 'org-modules 'org-habit)
+
+(setq org-habit-show-habits-only-for-today t) ; optional
+(setq org-habit-graph-column 50)              ; adjust for agenda width
+
+
+
+
 (defun my-org-ql-search-recursive (query)
   "Run `org-ql-search' over every .org file recursively in `org-directory'."
   (interactive "sorg-ql query: ")
@@ -73,6 +82,7 @@ Only active if the file is an org file."
     (error (message "No todo bookmark set."))))
 
 ;; Org capture templates
+
 (setq org-capture-templates
       '(("l" "Send to life inbox" entry
          (file+headline "~/org/tasks.org" "Life")
@@ -88,10 +98,13 @@ Only active if the file is an org file."
          (file+datetree "~/org/workouts.org")
          "* Workout on %U\n| Exercise | Weight | Sets | Reps | Notes | \n|-\n||||||"
          :empty-lines 1)
-
 	("r" "Log a run" entry
 	 (file+datetree "~/org/runs.org")
-	 "* Run on %U\n| Length | Time | Pace | Avg. HR | Notes | \n|-\n||||||")))
+	 "* Run on %U\n| Length | Time | Pace | Avg. HR | Notes | \n|-\n||||||")
+	("h" "New habit" entry
+         (file+headline "~/org/habits.org" "Habits")
+         "* TODO %?\nSCHEDULED:\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:"
+         :empty-lines 1)))
 
 (defun my-align-tables-in-buffer ()
   "Align all Org tables in the buffer."
@@ -106,6 +119,8 @@ Only active if the file is an org file."
 
 ;; We don't need the file indicator in the agenda
 ;; since we're only reading from one file.
+(setq org-agenda-files '("~/org/tasks.org" "~/org/habits.org"))
+
 (setq org-agenda-prefix-format '((agenda . " %?-12t %s")))
 
 (use-package denote
