@@ -39,8 +39,6 @@
 (setq org-habit-graph-column 50)              ; adjust for agenda width
 
 
-
-
 (defun my-org-ql-search-recursive (query)
   "Run `org-ql-search' over every .org file recursively in `org-directory'."
   (interactive "sorg-ql query: ")
