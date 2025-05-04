@@ -113,7 +113,7 @@ Only active if the file is an org file."
          :empty-lines 1)
         ("W" "Log weight" table-line
          (file+headline "~/org/weight.org" "Weight")
-         "| %U | %^{Weight (lbs)} |"
+         "| %(format-time-string \"%Y-%m-%d\") | %^{Weight (lbs)} |"
          :kill-buffer t
          :immediate-finish t
          :empty-lines 0))
