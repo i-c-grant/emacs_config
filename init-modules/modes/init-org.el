@@ -111,10 +111,12 @@ Only active if the file is an org file."
          (file+headline "~/org/habits.org" "Habits")
          "* TODO %?\nSCHEDULED:\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:"
          :empty-lines 1)
-        ("W" "Log weight" entry
-         (file+datetree "~/org/weight.org")
-         "* %?\n"
-         :empty-lines 1)))
+        ("W" "Log weight" table-line
+         (file+headline "~/org/weight.org" "Weight")
+         "| %U | %^{Weight (lbs)} |"
+         :kill-buffer t
+         :immediate-finish t
+         :empty-lines 0)))
 
 (defun my-align-tables-in-buffer ()
   "Align all Org tables in the buffer."
