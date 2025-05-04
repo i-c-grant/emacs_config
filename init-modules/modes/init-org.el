@@ -113,7 +113,7 @@ Only active if the file is an org file."
          :empty-lines 1)
         ("W" "Log weight" entry
          (file+datetree "~/org/weight.org")
-         "* %? kg\n"
+         "* %?\n"
          :empty-lines 1)))
 
 (defun my-align-tables-in-buffer ()
