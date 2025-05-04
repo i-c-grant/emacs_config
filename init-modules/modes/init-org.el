@@ -116,7 +116,7 @@ Only active if the file is an org file."
          "| %U | %^{Weight (lbs)} |"
          :kill-buffer t
          :immediate-finish t
-         :empty-lines 0)))
+         :empty-lines 0))
 
 (defun my-align-tables-in-buffer ()
   "Align all Org tables in the buffer."
