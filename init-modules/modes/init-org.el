@@ -268,7 +268,7 @@ maps to tag “silverbulletinpolls”."
               (copy-file (buffer-file-name) dest-file t)
 	      ;; set the file to read-only
 	      (set-file-modes dest-file #o444)
-	      (message "Copied to %s" (buffer-file-name) dest-file))))))))
+	      (message "Copied to %s" dest-file))))))))
 
 (add-hook 'after-save-hook #'my-denote-copy-to-aider)
 
