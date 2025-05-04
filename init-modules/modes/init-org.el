@@ -110,6 +110,10 @@ Only active if the file is an org file."
 	("h" "New habit" entry
          (file+headline "~/org/habits.org" "Habits")
          "* TODO %?\nSCHEDULED:\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:"
+         :empty-lines 1)
+        ("W" "Log weight" entry
+         (file+datetree "~/org/weight.org")
+         "* %? kg\n"
          :empty-lines 1)))
 
 (defun my-align-tables-in-buffer ()
