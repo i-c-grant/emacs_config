@@ -12,19 +12,54 @@
           ("C-c a" . org-agenda)
           ("C-c f" . insert-citation-needed))
 
+  :config
+  ;; Set org directory
+  (setq org-directory "~/org")
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (setq org-startup-folded t)
+  (setq org-todo-keywords
+	'((sequence "TODO(t)" "IN-PROGRESS(i!)" "WAIT(w@)" "ASSIGN(a!)" "|" "DONE(d!)" "CANCELLED(c@)")))
+
+
+  ;; Agenda
+  (setq org-agenda-files '("~/org/tasks.org" "~/org/habits.org"))
+  (setq org-agenda-prefix-format '((agenda . " %?-12t %s")))
+  (setq org-habit-show-all-today t)
+
+  (setq org-capture-templates
+      '(("l" "Send to life inbox" entry
+         (file+headline "~/org/tasks.org" "Life")
+         "* TODO %?\n"
+         :empty-lines 1)
+	("w" "Send to work inbox" entry
+         (file+headline "~/org/tasks.org" "Work")
+         "* TODO %?\n"
+         :empty-lines 1)
+        ;; ----------------------------------------------------------------------------
+        ;; Log a workout: date-tree + a 4-column table
+        ("g" "Log workout" entry
+         (file+datetree "~/org/workouts.org")
+         "* Workout on %U\n| Exercise | Weight | Sets | Reps | Notes | \n|-\n||||||"
+         :empty-lines 1)
+	("r" "Log a run" entry
+	 (file+datetree "~/org/runs.org")
+	 "* Run on %U\n| Length | Time | Pace | Avg. HR | Notes | \n|-\n||||||")
+	("h" "New habit" entry
+         (file+headline "~/org/habits.org" "Habits")
+         "* TODO %?\nSCHEDULED:\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:"
+         :empty-lines 1)
+        ("W" "Log weight" table-line
+         (file+headline "~/org/weight.org" "Weight")
+         "| %(format-time-string \"%Y-%m-%d\") | %^{Weight (lbs)} |"
+         :kill-buffer t
+         :immediate-finish t
+         :empty-lines 0)))
+
   :hook ((org-mode . visual-line-mode)
 	 ;; disable corfu
 	 (org-mode . corfu-mode)
 	 (org-mode . org-indent-mode)))
           
-(setq org-directory "~/org")
-(setq org-default-notes-file (concat org-directory "/notes.org"))
-(setq org-startup-folded t)
-
-;; Set todo keywords
-(setq org-todo-keywords
-      '((sequence "TODO(t!)" "IN-PROGRESS(i!)" "WAIT(w@)" "ASSIGN(a!)" "|" "DONE(d!)" "CANCELLED(c@)")))
-
 (use-package org-modern
   :hook (org-mode . org-modern-mode)
 )
@@ -37,7 +72,6 @@
 
 (setq org-habit-show-habits-only-for-today t) ; optional
 (setq org-habit-graph-column 50)              ; adjust for agenda width
-
 
 (defun my-org-ql-search-recursive (query)
   "Run `org-ql-search' over every .org file recursively in `org-directory'."
@@ -89,35 +123,6 @@ Only active if the file is an org file."
 
 ;; Org capture templates
 
-(setq org-capture-templates
-      '(("l" "Send to life inbox" entry
-         (file+headline "~/org/tasks.org" "Life")
-         "* TODO %?\n"
-         :empty-lines 1)
-	("w" "Send to work inbox" entry
-         (file+headline "~/org/tasks.org" "Work")
-         "* TODO %?\n"
-         :empty-lines 1)
-        ;; ----------------------------------------------------------------------------
-        ;; Log a workout: date-tree + a 4-column table
-        ("g" "Log workout" entry
-         (file+datetree "~/org/workouts.org")
-         "* Workout on %U\n| Exercise | Weight | Sets | Reps | Notes | \n|-\n||||||"
-         :empty-lines 1)
-	("r" "Log a run" entry
-	 (file+datetree "~/org/runs.org")
-	 "* Run on %U\n| Length | Time | Pace | Avg. HR | Notes | \n|-\n||||||")
-	("h" "New habit" entry
-         (file+headline "~/org/habits.org" "Habits")
-         "* TODO %?\nSCHEDULED:\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:"
-         :empty-lines 1)
-        ("W" "Log weight" table-line
-         (file+headline "~/org/weight.org" "Weight")
-         "| %(format-time-string \"%Y-%m-%d\") | %^{Weight (lbs)} |"
-         :kill-buffer t
-         :immediate-finish t
-         :empty-lines 0))
-
 (defun my-align-tables-in-buffer ()
   "Align all Org tables in the buffer."
   (when (derived-mode-p 'org-mode)
@@ -131,10 +136,6 @@ Only active if the file is an org file."
 
 ;; We don't need the file indicator in the agenda
 ;; since we're only reading from one file.
-(setq org-agenda-files '("~/org/tasks.org" "~/org/habits.org"))
-
-(setq org-agenda-prefix-format '((agenda . " %?-12t %s")))
-
 (use-package denote
   :ensure t
   :custom

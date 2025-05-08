@@ -23,7 +23,6 @@
    ["[/home/ian/anaconda3/envs/geo_dev/lib/python3.9/site-packages/geopandas/]"])
  '(lsp-pyright-venv-path "/home/ian/anaconda3/envs")
  '(nil nil t)
- '(org-agenda-files '("~/org/tasks.org"))
  '(org-archive-location "archive.org::datetree/")
  '(org-babel-load-languages '((python . t) (R . t)))
  '(org-babel-python-command "python3")
@@ -34,15 +33,16 @@
  '(package-selected-packages
    '(ace-window babel blacken catppuccin-theme chatgpt-shell citeproc
 		company consult-denote consult-org-roam corfu csv-mode
-		denote denote-journal denote-org docker
-		dockerfile-mode editorconfig ein embark-consult ess
-		exec-path-from-shell gptel hydra key-chord magit
+		denote denote-journal denote-org devdocs-browser
+		docker dockerfile-mode editorconfig ein embark-consult
+		ess exec-path-from-shell gptel hydra key-chord magit
 		marginalia markdown-mode meow minions no-littering
 		orderless org-modern org-ql org-superstar popper
 		pyvenv repeat-fu ripgrep vertico vterm yaml-mode
 		zenburn-theme))
  '(package-vc-selected-packages
-   '((org-modern-indent :url
+   '((gptel :url "https://github.com/karthink/gptel.git")
+     (org-modern-indent :url
 			"https://github.com/jdtsmith/org-modern-indent"
 			:branch "main")))
  '(projectile-mode t)
