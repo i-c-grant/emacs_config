@@ -22,6 +22,15 @@ if [ -e "$HOME/.emacs.d" ] && [ ! -L "$HOME/.emacs.d" ]; then
   mv "$HOME/.emacs.d" "$HOME/.emacs.d.bak.$(date +%Y%m%d%H%M%S)"
 fi
 ln -sfn "$repo_dir" "$HOME/.emacs.d"
+
+# Org files live in their own private repo so they survive container rebuilds.
+# A failed clone (e.g. no GitHub credentials yet) shouldn't stop the install.
+org_repo="${ORG_REPO:-https://github.com/i-c-grant/org.git}"
+if [ ! -d "$HOME/org/.git" ]; then
+  if ! git clone -q "$org_repo" "$HOME/org"; then
+    echo "WARNING: couldn't clone $org_repo into ~/org; clone it by hand later." >&2
+  fi
+fi
 mkdir -p "$HOME/org/notes"
 
 # Install packages, compile vterm, and fetch the Python grammar now so the
