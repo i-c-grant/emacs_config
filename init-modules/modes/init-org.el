@@ -261,6 +261,78 @@ Assumes names like 20250424T121314--title__tag1_tag2.org."
   (org-agenda-finalize)
   (setq buffer-read-only t))
 
+;;; --- git sync for org-directory ------------------------------------------
+;; org-directory is its own git repo (cloned by install.sh). Commit and push
+;; shortly after saves so nothing is lost when a devcontainer is rebuilt.
+(defvar my-org-git-sync-delay 10
+  "Seconds after the last save in `org-directory' before committing and pushing.")
+(defvar my-org-git-sync--timer nil)
+(defvar my-org-git-sync--process nil)
+
+(defconst my-org-git-sync-command
+  (concat "{ test ! -e .git/MERGE_HEAD"
+          " || { echo 'Unresolved merge in org-directory; resolve it first' >&2; exit 1; }; }"
+          " && git add -A"
+          " && { git diff --cached --quiet || git commit -q -m \"Auto-sync from $(hostname)\"; }"
+          " && git pull -q --no-rebase --no-edit"
+          " && git push -q"))
+
+(defun my-org-git-repo-p ()
+  "Return non-nil if `org-directory' is a git repository."
+  (file-directory-p (expand-file-name ".git" org-directory)))
+
+(defun my-org-git-sync--run (command &optional sync)
+  "Run shell COMMAND in `org-directory', in the background unless SYNC."
+  (let ((default-directory (file-name-as-directory (expand-file-name org-directory)))
+        (process-environment (cons "GIT_TERMINAL_PROMPT=0" process-environment)))
+    (if sync
+        (unless (zerop (call-process-shell-command command nil "*org-git-sync*"))
+          (message "Org git sync failed; see *org-git-sync*"))
+      (setq my-org-git-sync--process
+            (start-process-shell-command "org-git-sync" "*org-git-sync*" command))
+      (set-process-sentinel
+       my-org-git-sync--process
+       (lambda (proc _event)
+         (when (and (eq (process-status proc) 'exit)
+                    (/= (process-exit-status proc) 0))
+           (message "Org git sync failed; see *org-git-sync*")))))))
+
+(defun my-org-git-sync-now (&optional sync)
+  "Commit, pull and push `org-directory'.  Run synchronously if SYNC."
+  (interactive)
+  (when my-org-git-sync--timer
+    (cancel-timer my-org-git-sync--timer)
+    (setq my-org-git-sync--timer nil))
+  (cond ((not (my-org-git-repo-p)) nil)
+        ;; A sync is already running; try again once it has had time to finish
+        ((and (not sync) (process-live-p my-org-git-sync--process))
+         (my-org-git-sync-schedule t))
+        (t (my-org-git-sync--run my-org-git-sync-command sync))))
+
+(defun my-org-git-sync-schedule (&optional force)
+  "Sync `org-directory' after `my-org-git-sync-delay' seconds of no saves.
+Only acts when the current buffer's file is inside it, unless FORCE."
+  (when (and (my-org-git-repo-p)
+             (or force
+                 (and buffer-file-name
+                      (file-in-directory-p buffer-file-name org-directory))))
+    (when my-org-git-sync--timer
+      (cancel-timer my-org-git-sync--timer))
+    (setq my-org-git-sync--timer
+          (run-with-timer my-org-git-sync-delay nil #'my-org-git-sync-now))))
+
+(defun my-org-git-sync-on-exit ()
+  "Flush a pending sync before Emacs exits."
+  (when my-org-git-sync--timer
+    (my-org-git-sync-now t)))
+
+(add-hook 'after-save-hook #'my-org-git-sync-schedule)
+(add-hook 'kill-emacs-hook #'my-org-git-sync-on-exit)
+
+;; Pick up changes pushed from other machines
+(when (and (not noninteractive) (my-org-git-repo-p))
+  (my-org-git-sync--run "git pull -q --no-rebase --no-edit"))
+
 ;; Set keybindings for project notes and todo bookmarks
 (global-set-key (kbd "C-c n p") 'my-denote-project-note)
 (global-set-key (kbd "C-*") 'my-set-todo-bookmark)
