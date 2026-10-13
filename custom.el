@@ -4,8 +4,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(blacken-executable "/home/ian/anaconda3/bin/black")
- '(copilot-node-executable "/home/ian/.nvm/versions/node/v20.12.0/bin/node")
  '(custom-safe-themes
    '("c46651ab216eb31e699be1bd5e6df8229b08005b534194c1ea92519b09661d71"
      "f079ef5189f9738cf5a2b4507bcaf83138ad22d9c9e32a537d61c9aae25502ef"
@@ -18,40 +16,16 @@
  '(history-length 1000)
  '(ispell-dictionary nil)
  '(key-chord-one-key-delay 0.0)
- '(lsp-completion-provider :none)
- '(lsp-pyright-extra-paths
-   ["[/home/ian/anaconda3/envs/geo_dev/lib/python3.9/site-packages/geopandas/]"])
- '(lsp-pyright-venv-path "/home/ian/anaconda3/envs")
- '(nil nil t)
  '(org-archive-location "archive.org::datetree/")
- '(org-babel-load-languages '((python . t) (R . t)))
+ '(org-babel-load-languages '((python . t)))
  '(org-babel-python-command "python3")
- '(org-log-done 'time)
- '(org-log-into-drawer t)
  '(org-modern-block-fringe 2)
  '(org-src-preserve-indentation t)
  '(package-selected-packages
-   '(ace-window babel blacken catppuccin-theme chatgpt-shell citeproc
-		company consult-denote consult-org-roam corfu csv-mode
-		denote denote-journal denote-org devdocs-browser
-		docker dockerfile-mode editorconfig ein embark-consult
-		ess exec-path-from-shell gptel hydra key-chord magit
-		marginalia markdown-mode meow minions no-littering
-		orderless org-modern org-ql org-superstar popper
-		pyvenv repeat-fu ripgrep vertico vterm yaml-mode
-		zenburn-theme))
- '(package-vc-selected-packages
-   '((gptel :url "https://github.com/karthink/gptel.git")
-     (org-modern-indent :url
-			"https://github.com/jdtsmith/org-modern-indent"
-			:branch "main")))
- '(projectile-mode t)
- '(safe-local-variable-values
-   '((projectile-project-test-prefix
-      . "/home/ian/miniconda3/bin/conda run -n floodnet-client")
-     (projectile-project-test-cmd . "pytest -v tests/test_client.py")
-     (projectile-test-cmd . "pytest -v tests/test_client.py")
-     (projectile-test-cmd . "pytest tests/")))
+   '(ace-window consult consult-denote corfu denote denote-journal
+		denote-org embark embark-consult exec-path-from-shell
+		key-chord magit marginalia meow minions no-littering
+		orderless org-modern vertico vterm zenburn-theme))
  '(sentence-end-double-space nil)
  '(tags-add-tables nil)
  '(vertico-posframe-border-width 14)

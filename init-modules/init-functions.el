@@ -108,16 +108,6 @@
       (file-name-nondirectory
        (directory-file-name (project-root project))))))
 
-(defun launch-aider ()
-  "Launch aider in a vterm buffer in other window using the default config."
-  (interactive)
-  (let* ((project-name (my-project-name))
-         (buffer-name (format "*aider: %s*" project-name))
-         (vterm-buffer (vterm-other-window buffer-name)))
-    (with-current-buffer vterm-buffer
-      (vterm-send-string "conda activate aider-env && aider --config ~/.aider/.aider.conf.yml")
-      (vterm-send-return))))
-
 (defun show-file-name ()
   "Show the full file name in the minibuffer and copy it to the kill ring."
   (interactive)
@@ -216,13 +206,5 @@ If REGION is provided, unfill that region."
   (let ((fill-column (point-max))
         (emacs-lisp-docstring-fill-column t))
     (fill-paragraph nil region)))
-
-(defun one-side-weight-to-barbell ()
-  "Convert a one-sided weight to a barbell weight."
-  (interactive)
-  (let ((weight (read-number "Weight on one side: ")))
-    (if (> weight 0)
-	(message "Barbell weight: %d" (+ (* 2 weight) 45))
-      (message "Invalid weight"))))
 
 (provide 'init-functions)

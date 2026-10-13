@@ -3,19 +3,17 @@
 
 ;; Load the core configuration
 (require 'init-core)
-(require 'no-littering)
+(use-package no-littering)
 
 (require 'init-aesthetics)
 
 ;; Load the mode modules
-(require 'init-copilot)
 (require 'init-corfu)
 (require 'init-org)
 (require 'init-magit)
 (require 'init-marginalia)
 (require 'init-dired)
 (require 'init-orderless)
-;; (require 'init-projectile)
 (require 'init-vertico)
 (require 'init-embark)
 
@@ -29,7 +27,6 @@
 
 (require 'init-eglot)
 (require 'init-python)
-(require 'init-ess)
 
 ;; Load the keybindings
 (require 'init-keychord)

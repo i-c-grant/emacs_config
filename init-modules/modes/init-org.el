@@ -18,42 +18,20 @@
   (setq org-default-notes-file (concat org-directory "/notes.org"))
   (setq org-startup-folded t)
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "IN-PROGRESS(i!)" "WAIT(w@)" "ASSIGN(a!)" "|" "DONE(d!)" "CANCELLED(c@)")))
+	'((sequence "TODO(t)" "IN-PROGRESS(i)" "WAIT(w)" "ASSIGN(a)" "|" "DONE(d)" "CANCELLED(c)")))
+  ;; Don't log timestamps or prompt for notes on state changes
+  (setq org-log-done nil)
 
 
   ;; Agenda
-  (setq org-agenda-files '("~/org/tasks.org" "~/org/habits.org"))
+  (setq org-agenda-files '("~/org/tasks.org"))
   (setq org-agenda-prefix-format '((agenda . " %?-12t %s")))
-  (setq org-habit-show-all-today t)
 
   (setq org-capture-templates
-      '(("l" "Send to life inbox" entry
-         (file+headline "~/org/tasks.org" "Life")
-         "* TODO %?\n"
-         :empty-lines 1)
-	("w" "Send to work inbox" entry
-         (file+headline "~/org/tasks.org" "Work")
-         "* TODO %?\n"
-         :empty-lines 1)
-        ;; ----------------------------------------------------------------------------
-        ;; Log a workout: date-tree + a 4-column table
-        ("g" "Log workout" entry
-         (file+datetree "~/org/workouts.org")
-         "* Workout on %U\n| Exercise | Weight | Sets | Reps | Notes | \n|-\n||||||"
-         :empty-lines 1)
-	("r" "Log a run" entry
-	 (file+datetree "~/org/runs.org")
-	 "* Run on %U\n| Length | Time | Pace | Avg. HR | Notes | \n|-\n||||||")
-	("h" "New habit" entry
-         (file+headline "~/org/habits.org" "Habits")
-         "* TODO %?\nSCHEDULED:\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: TODO\n:END:"
-         :empty-lines 1)
-        ("W" "Log weight" table-line
-         (file+headline "~/org/weight.org" "Weight")
-         "| %(format-time-string \"%Y-%m-%d\") | %^{Weight (lbs)} |"
-         :kill-buffer t
-         :immediate-finish t
-         :empty-lines 0)))
+        '(("w" "Send to work inbox" entry
+           (file+headline "~/org/tasks.org" "Work")
+           "* TODO %?\n"
+           :empty-lines 1)))
 
   :hook ((org-mode . visual-line-mode)
 	 ;; disable corfu
@@ -63,33 +41,6 @@
 (use-package org-modern
   :hook (org-mode . org-modern-mode)
 )
-
-(use-package org-ql
-  :ensure t)
-
-(require 'org-habit)
-(add-to-list 'org-modules 'org-habit)
-
-(setq org-habit-show-habits-only-for-today t) ; optional
-(setq org-habit-graph-column 50)              ; adjust for agenda width
-
-(defun my-org-ql-search-recursive (query)
-  "Run `org-ql-search' over every .org file recursively in `org-directory'."
-  (interactive "sorg-ql query: ")
-  (let ((files (directory-files-recursively
-                 org-directory
-                 "\\.org$"
-                 nil
-                 (lambda (f)
-                   (let ((name (file-name-nondirectory f)))
-                     (not (or (string-suffix-p "~" name)
-                              (and (string-prefix-p "#" name)
-                                   (string-suffix-p "#" name)))))))))
-    (org-ql-search files query
-      :narrow nil
-      :super-groups '((:auto-tags))
-      :sort 'date
-      :title    (format "Org-QL “%s”" query))))
 
 (modify-all-frames-parameters
  '((right-divider-width . 40)
@@ -223,10 +174,6 @@ filename via `my-denote-filename-tags`.  PROJECT is chosen from FILE-TAGS (exclu
      ;; Denote will sanitize project-name automatically
      (list "project" (sanitize-project-name project-name)))))
 
-;; Shadow project-related notes into project directories on save
-;; (this is necessary to load notes into Aider,
-;; since Aider is scoped to the project directory)
-
 ;;; --- helpers ------------------------------------------------------------
 (defun my-denote-filename-tags (&optional file)
   "Return a list of tags from Denote FILE (default: current buffer).
@@ -237,47 +184,6 @@ Assumes names like 20250424T121314--title__tag1_tag2.org."
     (when tag-field
       (split-string tag-field "_+" t)))       ; split on one-or-more “_”
   )
-
-(defun my-projects-tag-map ()
-  "Return an alist (TAG . DIR) for every sub-dir of ~/projects.
-TAG is the directory name stripped of all non-alphanumerics and
-down-cased so that, e.g.,  ~/projects/silver_bulletin_polls
-maps to tag “silverbulletinpolls”."
-  (let* ((root "~/projects")
-         (dirs (seq-filter #'file-directory-p
-                           (directory-files root 'full "^[^.]"))))
-    (mapcar (lambda (dir)
-              (let* ((name (file-name-nondirectory dir))
-                     (tag  (downcase (replace-regexp-in-string "[^A-Za-z0-9]" "" name))))
-                (cons tag dir)))
-            dirs)))
-
-;;; --- main hook ---------------------------------------------------------
-(defun my-denote-copy-to-aider ()
-  "If the current Org note is under `denote-directory' and has a
-“project” tag, copy it to the corresponding project’s
-.aider/context/notes/ directory."
-  (when (derived-mode-p 'org-mode)
-    (let* ((tags  (my-denote-filename-tags)))
-      (when (and (file-in-directory-p default-directory denote-directory)
-                 (member "project" tags))
-        (let ((match (seq-find (lambda (pr) (member (car pr) tags))
-                               (my-projects-tag-map))))
-          (when match
-            (pcase-let* ((`(,_tag . ,proj-dir) match)
-                         (dest-dir  (expand-file-name "context/notes/" proj-dir))
-                         (dest-file (expand-file-name (file-name-nondirectory
-                                                       (buffer-file-name))
-                                                      dest-dir)))
-              (make-directory dest-dir t)
-              (when (file-exists-p dest-file)
-                (delete-file dest-file))
-              (copy-file (buffer-file-name) dest-file t)
-	      ;; set the file to read-only
-	      (set-file-modes dest-file #o444)
-	      (message "Copied to %s" dest-file))))))))
-
-(add-hook 'after-save-hook #'my-denote-copy-to-aider)
 
 ;; Set keybindings for project notes and todo bookmarks
 ;; (global-set-key (kbd "C-c n p") 'my-denote-project-note)
