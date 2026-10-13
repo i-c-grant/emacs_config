@@ -1,5 +1,7 @@
 ;; Contents transferred from config.org: aesthetics-only settings
-(load-theme 'zenburn t)
+(use-package zenburn-theme
+  :config
+  (load-theme 'zenburn t))
 ;; General appearance settings
 (setq inhibit-startup-message t)
 
