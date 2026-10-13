@@ -5,11 +5,14 @@
 ;; General appearance settings
 (setq inhibit-startup-message t)
 
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(tooltip-mode -1)
-(set-fringe-mode 10)
 (menu-bar-mode -1)
+
+;; GUI-only settings; skipped under emacs-nox / emacs -nw
+(when (display-graphic-p)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (tooltip-mode -1)
+  (set-fringe-mode 10))
 
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
@@ -17,7 +20,8 @@
 
 (setq visible-bell t)
 ;; Font settings from config.org
-(set-frame-font "Jetbrains Mono 14" nil t)
+(when (display-graphic-p)
+  (set-frame-font "Jetbrains Mono 14" nil t))
 (global-auto-composition-mode -1)
 
 ;; --- Begin transferred "Theme and appearance" settings from config.org ---
@@ -48,7 +52,8 @@
 (global-hl-line-mode 1)
 (blink-cursor-mode 0)
 (show-paren-mode 1)
-(toggle-frame-fullscreen)
+(when (display-graphic-p)
+  (toggle-frame-fullscreen))
 (global-auto-revert-mode 1)
 
 (use-package minions
