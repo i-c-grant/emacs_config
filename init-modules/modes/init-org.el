@@ -20,8 +20,8 @@
   (setq org-startup-folded t)
   (setq org-todo-keywords
 	'((sequence "TODO(t)" "NEXT(n)" "IN-PROGRESS(i)" "WAIT(w)" "ASSIGN(a)" "|" "DONE(d)" "CANCELLED(c)")))
-  ;; Don't log timestamps or prompt for notes on state changes
-  (setq org-log-done nil)
+  ;; Stamp a CLOSED timestamp when an item is marked done, without prompting for a note
+  (setq org-log-done 'time)
 
 
   ;; Agenda: `org-agenda-files' is rebuilt from tasks.org plus every
