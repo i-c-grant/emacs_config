@@ -1,3 +1,6 @@
+;; Set before org loads: denote's directory below is derived from it
+(setq org-directory "~/org")
+
 (use-package org
   :ensure nil
   :bind (:map org-mode-map
@@ -13,19 +16,35 @@
           ("C-c f" . insert-citation-needed))
 
   :config
-  ;; Set org directory
-  (setq org-directory "~/org")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
   (setq org-startup-folded t)
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "IN-PROGRESS(i)" "WAIT(w)" "ASSIGN(a)" "|" "DONE(d)" "CANCELLED(c)")))
+	'((sequence "TODO(t)" "NEXT(n)" "IN-PROGRESS(i)" "WAIT(w)" "ASSIGN(a)" "|" "DONE(d)" "CANCELLED(c)")))
   ;; Don't log timestamps or prompt for notes on state changes
   (setq org-log-done nil)
 
 
-  ;; Agenda
-  (setq org-agenda-files '("~/org/tasks.org"))
-  (setq org-agenda-prefix-format '((agenda . " %?-12t %s")))
+  ;; Agenda: `org-agenda-files' is rebuilt from tasks.org plus every
+  ;; Denote project note each time the agenda or refile runs (see
+  ;; `my-org-refresh-agenda-files'), so show the category on each line.
+  (setq org-agenda-prefix-format
+        '((agenda . " %-14:c%?-12t %s")
+          (todo   . " %-14:c")
+          (tags   . " %-14:c")
+          (search . " %-14:c")))
+  ;; The category already names the project; don't repeat its filetags
+  (setq org-agenda-show-inherited-tags nil)
+  (setq org-agenda-custom-commands
+        '(("d" "On deck"
+           ((agenda "" ((org-agenda-span 'day)))
+            (todo "IN-PROGRESS" ((org-agenda-overriding-header "In progress")))
+            (todo "NEXT" ((org-agenda-overriding-header "Next up")))
+            (my-org-agenda-stuck-projects "")))))
+
+  ;; Refile into the inbox or any project note
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
+  (setq org-refile-use-outline-path 'file)
+  (setq org-outline-path-complete-in-steps nil)
 
   (setq org-capture-templates
         '(("w" "Send to work inbox" entry
@@ -117,6 +136,7 @@ filename via `my-denote-filename-tags`.  PROJECT is chosen from FILE-TAGS (exclu
                        (org-end-of-subtree t t)
                        (buffer-substring-no-properties beg (point)))))
          (newfile  (denote title tags)))
+    (my-denote-add-category newfile project)
     (with-current-buffer (find-file-noselect newfile)
       (goto-char (point-max))
       (insert "\n" subtree)
@@ -169,10 +189,12 @@ filename via `my-denote-filename-tags`.  PROJECT is chosen from FILE-TAGS (exclu
                           (directory-file-name project-root)))))
     (unless project-root
       (error "Not in a project"))
-    (denote
-     (read-string "Note title: ")
-     ;; Denote will sanitize project-name automatically
-     (list "project" (sanitize-project-name project-name)))))
+    (my-denote-add-category
+     (denote
+      (read-string "Note title: ")
+      ;; Denote will sanitize project-name automatically
+      (list "project" (sanitize-project-name project-name)))
+     project-name)))
 
 ;;; --- helpers ------------------------------------------------------------
 (defun my-denote-filename-tags (&optional file)
@@ -185,8 +207,62 @@ Assumes names like 20250424T121314--title__tag1_tag2.org."
       (split-string tag-field "_+" t)))       ; split on one-or-more “_”
   )
 
+;;; --- project agenda -----------------------------------------------------
+(defun my-denote-add-category (file category)
+  "Add a #+category: CATEGORY line to the front matter of Denote FILE."
+  (with-current-buffer (find-file-noselect file)
+    (save-excursion
+      (goto-char (point-min))
+      (if (re-search-forward "^#\\+identifier:.*$" nil t)
+          (insert "\n#+category: " category)
+        (insert "#+category: " category "\n")))
+    (save-buffer)))
+
+(defun my-org-project-files ()
+  "Return the Denote notes in `denote-directory' tagged \"project\"."
+  (when (file-directory-p denote-directory)
+    (seq-filter (lambda (f) (member "project" (my-denote-filename-tags f)))
+                (directory-files-recursively denote-directory "\\.org\\'"))))
+
+(defun my-org-refresh-agenda-files (&rest _)
+  "Point `org-agenda-files' at tasks.org plus every project note."
+  (setq org-agenda-files
+        (cons (expand-file-name "tasks.org" org-directory)
+              (my-org-project-files))))
+
+(advice-add 'org-agenda :before #'my-org-refresh-agenda-files)
+(advice-add 'org-refile :before #'my-org-refresh-agenda-files)
+
+(defun my-org-stuck-project-p (file)
+  "Return non-nil if FILE has open TODOs but nothing NEXT or IN-PROGRESS."
+  (with-current-buffer (find-file-noselect file)
+    (org-with-wide-buffer
+     (let ((case-fold-search nil))
+       (goto-char (point-min))
+       (and (re-search-forward "^\\*+ \\(TODO\\|WAIT\\|ASSIGN\\) " nil t)
+            (progn (goto-char (point-min))
+                   (not (re-search-forward "^\\*+ \\(NEXT\\|IN-PROGRESS\\) " nil t))))))))
+
+(defun my-org-agenda-stuck-projects (&rest _)
+  "Agenda block listing project notes with no NEXT or IN-PROGRESS item."
+  (org-agenda-prepare "Stuck projects")
+  (insert (org-add-props "Stuck projects (open TODOs, nothing NEXT or IN-PROGRESS)\n"
+              nil 'face 'org-agenda-structure))
+  (let ((stuck (seq-filter #'my-org-stuck-project-p (my-org-project-files))))
+    (dolist (file stuck)
+      (let ((marker (with-current-buffer (find-file-noselect file)
+                      (copy-marker (point-min)))))
+        (insert (org-add-props
+                    (format "  %s\n" (with-current-buffer (marker-buffer marker)
+                                       (org-get-category (point-min))))
+                    nil 'org-marker marker))))
+    (unless stuck
+      (insert "  None\n")))
+  (org-agenda-finalize)
+  (setq buffer-read-only t))
+
 ;; Set keybindings for project notes and todo bookmarks
-;; (global-set-key (kbd "C-c n p") 'my-denote-project-note)
+(global-set-key (kbd "C-c n p") 'my-denote-project-note)
 (global-set-key (kbd "C-*") 'my-set-todo-bookmark)
 (global-set-key (kbd "C-8") 'my-jump-to-todo)
 

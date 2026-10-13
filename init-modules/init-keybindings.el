@@ -12,7 +12,7 @@
 (global-set-key (kbd "-") 'insert-delimiter)
 (global-set-key (kbd "C--") 'insert-dash)
 
-(global-set-key (kbd "C-c n") 'show-file-name)
+(global-set-key (kbd "C-c n n") 'show-file-name)
 (global-set-key (kbd "C-x K") 'kill-current-buffer)
 (global-set-key (kbd "C-;") 'comment-line)
 
