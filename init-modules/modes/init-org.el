@@ -300,6 +300,9 @@ is itself top-level counts under itself."
         "CLOSED>=\"<today>\"" 'file)
        (mapcar #'cdr (nreverse groups))))))
 
+(defvar my-org-done-today-label-width 30
+  "Widest the note-label column in Done today gets before labels are cut.")
+
 (defun my-org-agenda-done-today (&rest _)
   "Agenda block summarizing what was closed today, one line per top-level heading.
 Detail items closed under a heading are counted rather than listed, so
@@ -307,18 +310,24 @@ a day of many small tasks still reads at a glance.  RET on a line
 visits the heading."
   (org-agenda-prepare "Done today")
   (insert (org-add-props "Done today\n" nil 'face 'org-agenda-structure))
-  (let (any)
-    (dolist (file (org-agenda-files))
-      (dolist (group (my-org-done-today-by-top-heading file))
-        (pcase-let ((`(,marker ,title ,count) group))
-          (setq any t)
-          (insert (org-add-props
-                      (format "  %-22s %s  (%d done)\n"
-                              (truncate-string-to-width
-                               (my-org-file-label (marker-buffer marker)) 22)
-                              title count)
-                      nil 'org-marker marker)))))
-    (unless any
+  (let* ((rows (mapcan
+                (lambda (file)
+                  (mapcar (lambda (group)
+                            (cons (my-org-file-label (marker-buffer (car group))) group))
+                          (my-org-done-today-by-top-heading file)))
+                (org-agenda-files)))
+         ;; Size the label column to the longest label, capped so one long
+         ;; title can't push the headings off screen; longer ones get an ellipsis
+         (width (min my-org-done-today-label-width
+                     (apply #'max 0 (mapcar (lambda (row) (string-width (car row))) rows)))))
+    (dolist (row rows)
+      (pcase-let ((`(,label ,marker ,title ,count) row))
+        (insert (org-add-props
+                    (format "  %s  %s  (%d done)\n"
+                            (truncate-string-to-width label width nil ?\s "…")
+                            title count)
+                    nil 'org-marker marker))))
+    (unless rows
       (insert "  Nothing yet\n")))
   (org-agenda-finalize)
   (setq buffer-read-only t))
