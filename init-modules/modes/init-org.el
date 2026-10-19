@@ -39,7 +39,11 @@
            ((agenda "" ((org-agenda-span 'day)))
             (todo "IN-PROGRESS" ((org-agenda-overriding-header "In progress")))
             (todo "NEXT" ((org-agenda-overriding-header "Next up")))
-            (my-org-agenda-stuck-projects "")))))
+            (my-org-agenda-stuck-projects "")
+            ;; Anything closed today in the agenda files (tasks.org and the
+            ;; project notes), which keeps planning notes' details out
+            (tags "CLOSED>=\"<today>\""
+                  ((org-agenda-overriding-header "Done today")))))))
 
   ;; Refile into the inbox or any project note
   (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
