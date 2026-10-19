@@ -25,7 +25,7 @@
 
 
   ;; Agenda: `org-agenda-files' is rebuilt from tasks.org plus every
-  ;; Denote project note each time the agenda or refile runs (see
+  ;; Denote note each time the agenda or refile runs (see
   ;; `my-org-refresh-agenda-files'), so show the category on each line.
   (setq org-agenda-prefix-format
         '((agenda . " %-14:c%?-12t %s")
@@ -225,11 +225,18 @@ Assumes names like 20250424T121314--title__tag1_tag2.org."
     (seq-filter (lambda (f) (member "project" (my-denote-filename-tags f)))
                 (directory-files-recursively denote-directory "\\.org\\'"))))
 
+(defun my-org-note-files ()
+  "Return every Denote note in `denote-directory'."
+  (when (file-directory-p denote-directory)
+    (directory-files-recursively denote-directory "\\.org\\'")))
+
 (defun my-org-refresh-agenda-files (&rest _)
-  "Point `org-agenda-files' at tasks.org plus every project note."
+  "Point `org-agenda-files' at tasks.org plus every Denote note.
+Planning notes' many small items stay readable because Done today
+summarizes by top-level heading (`my-org-agenda-done-today')."
   (setq org-agenda-files
         (cons (expand-file-name "tasks.org" org-directory)
-              (my-org-project-files))))
+              (my-org-note-files))))
 
 (advice-add 'org-agenda :before #'my-org-refresh-agenda-files)
 (advice-add 'org-refile :before #'my-org-refresh-agenda-files)
@@ -306,9 +313,9 @@ visits the heading."
         (pcase-let ((`(,marker ,title ,count) group))
           (setq any t)
           (insert (org-add-props
-                      (format "  %-16s %s  (%d done)\n"
+                      (format "  %-22s %s  (%d done)\n"
                               (truncate-string-to-width
-                               (my-org-file-label (marker-buffer marker)) 16)
+                               (my-org-file-label (marker-buffer marker)) 22)
                               title count)
                       nil 'org-marker marker)))))
     (unless any
