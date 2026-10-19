@@ -40,10 +40,7 @@
             (todo "IN-PROGRESS" ((org-agenda-overriding-header "In progress")))
             (todo "NEXT" ((org-agenda-overriding-header "Next up")))
             (my-org-agenda-stuck-projects "")
-            ;; Anything closed today in the agenda files (tasks.org and the
-            ;; project notes), which keeps planning notes' details out
-            (tags "CLOSED>=\"<today>\""
-                  ((org-agenda-overriding-header "Done today")))))))
+            (my-org-agenda-done-today "")))))
 
   ;; Refile into the inbox or any project note
   (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
@@ -262,6 +259,60 @@ Assumes names like 20250424T121314--title__tag1_tag2.org."
                     nil 'org-marker marker))))
     (unless stuck
       (insert "  None\n")))
+  (org-agenda-finalize)
+  (setq buffer-read-only t))
+
+(defun my-org-file-label (buffer)
+  "Return a short name for the org file in BUFFER.
+Its #+CATEGORY if set, else its #+TITLE, else Org's default category
+(the file name)."
+  (with-current-buffer buffer
+    (let ((keywords (org-collect-keywords '("CATEGORY" "TITLE"))))
+      (or (cadr (assoc "CATEGORY" keywords))
+          (cadr (assoc "TITLE" keywords))
+          (org-get-category (point-min))))))
+
+(defun my-org-done-today-by-top-heading (file)
+  "Count FILE's entries closed today under each top-level heading.
+Return a list of (MARKER TITLE COUNT), in file order, where MARKER is
+the top-level heading and TITLE its text.  An entry closed today that
+is itself top-level counts under itself."
+  (with-current-buffer (find-file-noselect file)
+    (org-with-wide-buffer
+     (let (groups)
+       (org-map-entries
+        (lambda ()
+          (save-excursion
+            (while (org-up-heading-safe))
+            (let ((group (assoc (point) groups)))
+              (if group
+                  (cl-incf (nth 3 group))
+                (push (list (point) (copy-marker (point))
+                            (org-get-heading t t t t) 1)
+                      groups)))))
+        "CLOSED>=\"<today>\"" 'file)
+       (mapcar #'cdr (nreverse groups))))))
+
+(defun my-org-agenda-done-today (&rest _)
+  "Agenda block summarizing what was closed today, one line per top-level heading.
+Detail items closed under a heading are counted rather than listed, so
+a day of many small tasks still reads at a glance.  RET on a line
+visits the heading."
+  (org-agenda-prepare "Done today")
+  (insert (org-add-props "Done today\n" nil 'face 'org-agenda-structure))
+  (let (any)
+    (dolist (file (org-agenda-files))
+      (dolist (group (my-org-done-today-by-top-heading file))
+        (pcase-let ((`(,marker ,title ,count) group))
+          (setq any t)
+          (insert (org-add-props
+                      (format "  %-16s %s  (%d done)\n"
+                              (truncate-string-to-width
+                               (my-org-file-label (marker-buffer marker)) 16)
+                              title count)
+                      nil 'org-marker marker)))))
+    (unless any
+      (insert "  Nothing yet\n")))
   (org-agenda-finalize)
   (setq buffer-read-only t))
 
